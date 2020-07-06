@@ -4,13 +4,13 @@ body {
 }
 
 td {
-  border: 1px solid #79d9ce;
-  width: 20px;
-  height: 20px;
+  border: 1px solid #769fe3;
+  width: 30px;
+  height: 30px;
 }
 
 .key {
-  border: 1px solid #79d9ce;
+  border: 1px solid #769fe3;
   width: 20px;
   height: 20px;
   margin-right: 10px;
@@ -38,25 +38,25 @@ ul {
 .none {
   transition: background-color 0.1s ease-in-out;
   background-color: white;
-  border-color: #79d9ce;
+  border-color: #769fe3;
 }
 
 .searching {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1cd4b5;
-  border-color: #1cd4b5;
+  background-color: #769fe3;
+  border-color: #769fe3;
 }
 
 .visited {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1bacac;
-  border-color: #539de2;
+  background-color: #e89440;
+  border-color: #e89440;
 }
 
 .success {
   transition: background-color 0.08s ease-in-out;
-  background-color: #d0ff00;
-  border-color: #e4a736;
+  background-color:  #ffee31;
+  border-color:  #ffee31;
 }
 
 .start {
@@ -116,3 +116,44 @@ ul {
 .fun-fact {
   color: darkgreen;
 }
+
+#instructions_panel {
+    top: 80px;
+    left: 20px;
+    width: 550px;
+}
+.panel {
+    position: fixed;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    cursor: default;
+}
+
+div {
+    display: block;
+}
+
+#hide_instruction:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.white {
+    color: #fff;
+}
+
+.green {
+    color: #0d0;
+}
+
+.red {
+    color: #ff9166;
+}
+
+
+
+
+

@@ -19,6 +19,7 @@
       class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark"
       id="myNavbar"
     >
+      <a class="navbar-brand" href="#" id="logo">MarsHackers.</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -97,7 +98,8 @@
             </div>
           </li>
         </ul>
-
+        
+        <div id="play_panel" class="panel right_panel ui-draggable" style="top: 550px; left: 600px;">
         <button
           class="btn btn-outline-success btn-space"
           type="submit"
@@ -114,9 +116,23 @@
           Clear Board
         </button>
         <!-- <button type="button" class="btn btn-outline-danger disabled" type="submit" id="stopBtn">Stop</button> -->
+          </div>
       </div>
     </nav>
-
+     
+    
+    
+    <div id="instructions_panel" class="panel ui-draggable">
+		<header>
+		  <h2 class="header_title">Instructions</h2>
+		  <span id="hide_instructions">hide</span>
+		</header>
+		Click within the <span class="white">white</span> grid and drag your mouse to draw obstacles. <br>
+		Drag the <span class="green">green</span> node to set the start position. <br>
+		Drag the <span class="red">red</span> node to set the end position. <br>
+		Choose algorithm, maze and speed from the drop down list. <br>
+		Click Start Search in the upper-right corner to start the animation.
+      
     <div class="d-flex flex-row flex-wrap m-2 justify-content-around">
       <div class="d-flex p-2">
         <div class="key wall"></div>
@@ -144,6 +160,7 @@
         <div>Unvisited</div>
       </div>
     </div>
+      </div>
 
     <div class="d-flex flex-column align-items-center" id="bigTableContainer">
       <div id="tableContainer"></div>
