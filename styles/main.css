@@ -49,14 +49,14 @@ ul {
 
 .visited {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1bacac;
-  border-color: #539de2;
+  background-color: #e89440;
+  border-color: #e89440;
 }
 
 .success {
   transition: background-color 0.08s ease-in-out;
-  background-color: #d0ff00;
-  border-color: #e4a736;
+  background-color:  #ffee31;
+  border-color:  #ffee31;
 }
 
 .start {
