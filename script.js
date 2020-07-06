@@ -730,6 +730,7 @@ function AStar() {
   }
   return pathFound;
 }
+function biAstar() {}
 
 function jumpPointSearch() {
   var pathFound = false;
@@ -1553,13 +1554,14 @@ async function animateCells() {
   var cells = $("#tableContainer").find("td");
   var startCellIndex = startCell[0] * totalCols + startCell[1];
   var endCellIndex = endCell[0] * totalCols + endCell[1];
+  var endcellindex2 = endcell2[0] * totalCols + endcell2[1];
   var delay = getDelay();
   for (var i = 0; i < cellsToAnimate.length; i++) {
     var cellCoordinates = cellsToAnimate[i][0];
     var x = cellCoordinates[0];
     var y = cellCoordinates[1];
     var num = x * totalCols + y;
-    if (num == startCellIndex || num == endCellIndex) {
+    if (num == startCellIndex || num == endCellIndex || num == endcellindex2) {
       continue;
     }
     var cell = cells[num];
@@ -1575,24 +1577,6 @@ async function animateCells() {
   //console.log("End of animation has been reached!");
   return new Promise((resolve) => resolve(true));
 }
-/*
-async function flash(color){
-	var item = "#logo";
-	var originalColor = $(item).css("color");
-	if (color == "green"){
-		var colorRGB = '40,167,50';
-	} else if (color == "red"){
-		var colorRGB = '255,0,0';
-	}
-	var delay = 1; //ms
-	for (var i = 0.45; i <= 2.6; i += 0.01){
-    	$(item).css("color", 'rgba(' + colorRGB + ','+Math.abs(Math.sin(i))+')');
-		await new Promise(resolve => setTimeout(resolve, delay));
-	}
-	$(item).css("color", originalColor);
-	return new Promise(resolve => resolve(true));
-}
-*/
 
 function getDelay() {
   var delay;
