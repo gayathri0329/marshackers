@@ -1,19 +1,11 @@
-//Things to do:
-// Add more algorithms (research)
-// Bidirectional depth first search
-// Bidirectional A*?
-// Bidirectional breadth first search
-// Add more maze creation functions
-// Do pure horizontal and pure vertical maze
-// Do spiral maze from middle?
-/* ------------------------------------ */
-/* ---- Var Declarations & Preamble---- */
-/* ------------------------------------ */
-
+/*To do list 
+write the codes for algo IDAstar,Orthogonal JPS,Trace
+Implement JPS and greedyBFs for 2 end nodes
+implement bi directional Astar,Breadth First Search,Best First Search,Dijkstra
+Add different mazes other than present in this code */
 var totalRows = 25;
 var totalCols = 40;
 var inProgress = false;
-//var initialMessage = "Click or drag cells to build walls! Press start when you finish and have selected an algorithm!";
 var cellsToAnimate = [];
 var createWalls = false;
 var algorithm = null;
@@ -42,10 +34,6 @@ function generateGrid(rows, cols) {
 
 var myGrid = generateGrid(totalRows, totalCols);
 $("#tableContainer").append(myGrid);
-
-/* --------------------------- */
-/* --- OBJECT DECLARATIONS --- */
-/* --------------------------- */
 
 function Queue() {
   this.stack = new Array();
@@ -509,6 +497,7 @@ function BFS() {
   var prev = createPrev();
   var visited = createVisited();
   myQueue.enqueue(startCell);
+  var k = -1;
   cellsToAnimate.push(startCell, "searching");
   visited[startCell[0]][startCell[1]] = true;
   while (!myQueue.empty()) {
@@ -516,10 +505,13 @@ function BFS() {
     var r = cell[0];
     var c = cell[1];
     cellsToAnimate.push([cell, "visited"]);
-    if (
-      (r == endCell[0] && c == endCell[1]) ||
-      (r == endcell2[0] && c == endcell2[1])
-    ) {
+    if (r == endCell[0] && c == endCell[1]) {
+      k = 0;
+      pathFound = true;
+      break;
+    }
+    if (r == endcell2[0] && c == endcell2[1]) {
+      k = 1;
       pathFound = true;
       break;
     }
@@ -546,6 +538,14 @@ function BFS() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
+    if (k == 0) {
+      var r = endCell[0];
+      var c = endCell[1];
+    }
+    if (k == 1) {
+      var r = endcell2[0];
+      var c = endcell2[1];
+    }
     cellsToAnimate.push([[r, c], "success"]);
     while (prev[r][c] != null) {
       var prevCell = prev[r][c];
@@ -563,12 +563,13 @@ function dijkstra() {
   var prev = createPrev();
   var distances = createDistances();
   var visited = createVisited();
+  var k = -1;
   distances[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
   while (!myHeap.isEmpty()) {
     var cell = myHeap.getMin();
-    //console.log("Min was just popped from the heap! Heap is now: " + JSON.stringify(myHeap.heap));
+
     var i = cell[1][0];
     var j = cell[1][1];
     if (visited[i][j]) {
@@ -577,6 +578,12 @@ function dijkstra() {
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
+      k = 0;
+      pathFound = true;
+      break;
+    }
+    if (i == endcell2[0] && j == endcell2[1]) {
+      k = 1;
       pathFound = true;
       break;
     }
@@ -612,9 +619,16 @@ function dijkstra() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
-    var i = endCell[0];
-    var j = endCell[1];
-    cellsToAnimate.push([endCell, "success"]);
+    if (k == 0) {
+      var i = endCell[0];
+      var j = endCell[1];
+    }
+    if (k == 1) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+    }
+
+    cellsToAnimate.push([[i, j], "success"]);
     while (prev[i][j] != null) {
       var prevCell = prev[i][j];
       i = prevCell[0];
@@ -636,6 +650,7 @@ function AStar() {
   costs[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
+  var k = -1;
   while (!myHeap.isEmpty()) {
     var cell = myHeap.getMin();
     var i = cell[1][0];
@@ -646,6 +661,12 @@ function AStar() {
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
+      k = 0;
+      pathFound = true;
+      break;
+    }
+    if (i == endcell2[0] && j == endcell2[1]) {
+      k = 1;
       pathFound = true;
       break;
     }
@@ -668,6 +689,12 @@ function AStar() {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
       }
+      var nc =
+        distances[i][j] + Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
+      if (nc < costs[m][n]) {
+        costs[m][n] = nc;
+        myHeap.push([nc, [m, n]]);
+      }
     }
   }
   // Make any nodes still in the heap "visited"
@@ -683,9 +710,16 @@ function AStar() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
-    var i = endCell[0];
-    var j = endCell[1];
-    cellsToAnimate.push([endCell, "success"]);
+    if (k == 0) {
+      var i = endCell[0];
+      var j = endCell[1];
+    }
+    if (k == 1) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+    }
+
+    cellsToAnimate.push([[i, j], "success"]);
     while (prev[i][j] != null) {
       var prevCell = prev[i][j];
       i = prevCell[0];
