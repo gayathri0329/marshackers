@@ -733,7 +733,10 @@ function AStar() {
 function biAstar() {
   var pathFound = false;
   var myHeap = new minHeap();
+  var Heap = new minHeap();
   var prev = createPrev();
+  var prev1 = createPrev();
+  var prev2 = createPrev();
 }
 
 function jumpPointSearch() {
