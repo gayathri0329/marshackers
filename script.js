@@ -2,7 +2,8 @@
 write the codes for algo IDAstar,Orthogonal JPS,Trace
 Implement JPS for 2 end nodes
 implement bi directional Astar,Breadth First Search,Best First Search,Dijkstra
-Add different mazes other than present in this code */
+Add different mazes other than present in this code 
+Write code if both end nodes are at same distance*/
 var totalRows = 25;
 var totalCols = 40;
 var inProgress = false;
@@ -964,6 +965,7 @@ function greedyBestFirstSearch() {
   var prev = createPrev();
   var costs = createDistances();
   var visited = createVisited();
+  var k = -1;
   costs[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
@@ -976,8 +978,25 @@ function greedyBestFirstSearch() {
     }
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
+    if (
+      i == endCell[0] &&
+      j == endCell[1] &&
+      i == endcell2[0] &&
+      j == endcell2[1]
+    ) {
+      pathfound = true;
+      k = 2;
+      console.log("Hi");
+      break;
+    }
     if (i == endCell[0] && j == endCell[1]) {
       pathFound = true;
+      k = 0;
+      break;
+    }
+    if (i == endcell2[0] && j == endcell2[1]) {
+      pathFound = true;
+      k = 1;
       break;
     }
     var neighbors = getNeighbors(i, j);
@@ -988,10 +1007,17 @@ function greedyBestFirstSearch() {
         continue;
       }
       var newCost = Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
+      var nc = Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
       if (newCost < costs[m][n]) {
         prev[m][n] = [i, j];
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
+        cellsToAnimate.push([[m, n], "searching"]);
+      }
+      if (nc < costs[m][n]) {
+        prev[m][n] = [i, j];
+        costs[m][n] = nc;
+        myHeap.push([nc, [m, n]]);
         cellsToAnimate.push([[m, n], "searching"]);
       }
     }
@@ -1009,14 +1035,43 @@ function greedyBestFirstSearch() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
-    var i = endCell[0];
-    var j = endCell[1];
-    cellsToAnimate.push([endCell, "success"]);
-    while (prev[i][j] != null) {
-      var prevCell = prev[i][j];
-      i = prevCell[0];
-      j = prevCell[1];
+    if (k == 0) {
+      var i = endCell[0];
+      var j = endCell[1];
+    }
+    if (k == 1) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+    }
+    if (k == 2) {
+      var i = endCell[0];
+      var j = endCell[1];
+      var a = endcell2[0];
+      var b = endcell2[1];
+    }
+    if (k == 1 || k == 0) {
       cellsToAnimate.push([[i, j], "success"]);
+      while (prev[i][j] != null) {
+        var prevCell = prev[i][j];
+        i = prevCell[0];
+        j = prevCell[1];
+        cellsToAnimate.push([[i, j], "success"]);
+      }
+    } else if (k == 2) {
+      cellsToAnimate.push([[i, j], "success"]);
+      while (prev[i][j] != null) {
+        var prevCell = prev[i][j];
+        i = prevCell[0];
+        j = prevCell[1];
+        cellsToAnimate.push([[i, j], "success"]);
+      }
+      cellsToAnimate.push([[a, b], "success"]);
+      while (prev[a][b] != null) {
+        var prevCell = prev[i][j];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
     }
   }
   return pathFound;
@@ -1529,13 +1584,14 @@ async function animateCells() {
   var cells = $("#tableContainer").find("td");
   var startCellIndex = startCell[0] * totalCols + startCell[1];
   var endCellIndex = endCell[0] * totalCols + endCell[1];
+  var endcellindex2 = endcell2[0] * totalCols + endcell2[1];
   var delay = getDelay();
   for (var i = 0; i < cellsToAnimate.length; i++) {
     var cellCoordinates = cellsToAnimate[i][0];
     var x = cellCoordinates[0];
     var y = cellCoordinates[1];
     var num = x * totalCols + y;
-    if (num == startCellIndex || num == endCellIndex) {
+    if (num == startCellIndex || num == endCellIndex || num == endcellindex2) {
       continue;
     }
     var cell = cells[num];
