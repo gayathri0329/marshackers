@@ -1,9 +1,8 @@
 /*To do list 
 write the codes for algo IDAstar,Orthogonal JPS,Trace
-Implement JPS  2 end nodes
+Implement JPS for 2 end nodes
 implement bi directional Astar,Breadth First Search,Best First Search,Dijkstra
-Add different mazes other than present in this code 
-Add Heuristics*/
+Add different mazes other than present in this code */
 var totalRows = 25;
 var totalCols = 40;
 var inProgress = false;
@@ -730,7 +729,11 @@ function AStar() {
   }
   return pathFound;
 }
-function biAstar() {}
+function biAstar() {
+  var pathFound = false;
+  var myHeap = new minHeap();
+  var prev = createPrev();
+}
 
 function jumpPointSearch() {
   var pathFound = false;
@@ -961,7 +964,6 @@ function greedyBestFirstSearch() {
   var prev = createPrev();
   var costs = createDistances();
   var visited = createVisited();
-  var k = -1;
   costs[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
@@ -976,12 +978,6 @@ function greedyBestFirstSearch() {
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
       pathFound = true;
-      k = 0;
-      break;
-    }
-    if (i == endcell2[0] && j == endcell2[1]) {
-      pathFound = true;
-      k = 1;
       break;
     }
     var neighbors = getNeighbors(i, j);
@@ -992,22 +988,14 @@ function greedyBestFirstSearch() {
         continue;
       }
       var newCost = Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
-      var nc = Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
       if (newCost < costs[m][n]) {
         prev[m][n] = [i, j];
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
         cellsToAnimate.push([[m, n], "searching"]);
       }
-      if (nc < costs[m][n]) {
-        prev[m][n] = [i, j];
-        costs[m][n] = nc;
-        myHeap.push([nc, [m, n]]);
-        cellsToAnimate.push([[m, n], "searching"]);
-      }
     }
   }
-
   // Make any nodes still in the heap "visited"
   while (!myHeap.isEmpty()) {
     var cell = myHeap.getMin();
@@ -1021,16 +1009,9 @@ function greedyBestFirstSearch() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
-    if (k == 0) {
-      var i = endCell[0];
-      var j = endCell[1];
-    }
-    if (k == 1) {
-      var i = endcell2[0];
-      var j = endcell2[1];
-    }
-
-    cellsToAnimate.push([[i, j], "success"]);
+    var i = endCell[0];
+    var j = endCell[1];
+    cellsToAnimate.push([endCell, "success"]);
     while (prev[i][j] != null) {
       var prevCell = prev[i][j];
       i = prevCell[0];
@@ -1161,7 +1142,7 @@ function biBFS() {
   return pathFound;
 }
 
-/**function defaultCmp(x, y) {
+function defaultCmp(x, y) {
   if (x < y) {
     return -1;
   }
@@ -1221,7 +1202,7 @@ _siftup = function (array, pos, cmp) {
   }
   array[pos] = newitem;
   return _siftdown(array, startpos, pos, cmp);
-};**/
+};
 
 async function randomMaze() {
   1;
@@ -1310,12 +1291,6 @@ function inBounds(cell) {
   return (
     cell[0] >= 0 && cell[1] >= 0 && cell[0] < totalRows && cell[1] < totalCols
   );
-}
-async function Prims() {
-  var cell = [0, 0];
-  var walls = createVisited();
-  front = frontier(cell);
-  while (!front.isEmpty()) {}
 }
 
 async function recursiveDivMaze(bias) {
@@ -1554,14 +1529,13 @@ async function animateCells() {
   var cells = $("#tableContainer").find("td");
   var startCellIndex = startCell[0] * totalCols + startCell[1];
   var endCellIndex = endCell[0] * totalCols + endCell[1];
-  var endcellindex2 = endcell2[0] * totalCols + endcell2[1];
   var delay = getDelay();
   for (var i = 0; i < cellsToAnimate.length; i++) {
     var cellCoordinates = cellsToAnimate[i][0];
     var x = cellCoordinates[0];
     var y = cellCoordinates[1];
     var num = x * totalCols + y;
-    if (num == startCellIndex || num == endCellIndex || num == endcellindex2) {
+    if (num == startCellIndex || num == endCellIndex) {
       continue;
     }
     var cell = cells[num];
@@ -1577,6 +1551,24 @@ async function animateCells() {
   //console.log("End of animation has been reached!");
   return new Promise((resolve) => resolve(true));
 }
+/*
+async function flash(color){
+	var item = "#logo";
+	var originalColor = $(item).css("color");
+	if (color == "green"){
+		var colorRGB = '40,167,50';
+	} else if (color == "red"){
+		var colorRGB = '255,0,0';
+	}
+	var delay = 1; //ms
+	for (var i = 0.45; i <= 2.6; i += 0.01){
+    	$(item).css("color", 'rgba(' + colorRGB + ','+Math.abs(Math.sin(i))+')');
+		await new Promise(resolve => setTimeout(resolve, delay));
+	}
+	$(item).css("color", originalColor);
+	return new Promise(resolve => resolve(true));
+}
+*/
 
 function getDelay() {
   var delay;
