@@ -959,6 +959,7 @@ function greedyBestFirstSearch() {
   var prev = createPrev();
   var costs = createDistances();
   var visited = createVisited();
+  var k = -1;
   costs[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
@@ -973,6 +974,12 @@ function greedyBestFirstSearch() {
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
       pathFound = true;
+      k = 0;
+      break;
+    }
+    if (i == endcell2[0] && j == endcell2[1]) {
+      pathFound = true;
+      k = 1;
       break;
     }
     var neighbors = getNeighbors(i, j);
@@ -983,14 +990,22 @@ function greedyBestFirstSearch() {
         continue;
       }
       var newCost = Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
+      var nc = Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
       if (newCost < costs[m][n]) {
         prev[m][n] = [i, j];
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
         cellsToAnimate.push([[m, n], "searching"]);
       }
+      if (nc < costs[m][n]) {
+        prev[m][n] = [i, j];
+        costs[m][n] = nc;
+        myHeap.push([nc, [m, n]]);
+        cellsToAnimate.push([[m, n], "searching"]);
+      }
     }
   }
+
   // Make any nodes still in the heap "visited"
   while (!myHeap.isEmpty()) {
     var cell = myHeap.getMin();
@@ -1004,9 +1019,16 @@ function greedyBestFirstSearch() {
   }
   // If a path was found, illuminate it
   if (pathFound) {
-    var i = endCell[0];
-    var j = endCell[1];
-    cellsToAnimate.push([endCell, "success"]);
+    if (k == 0) {
+      var i = endCell[0];
+      var j = endCell[1];
+    }
+    if (k == 1) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+    }
+
+    cellsToAnimate.push([[i, j], "success"]);
     while (prev[i][j] != null) {
       var prevCell = prev[i][j];
       i = prevCell[0];
@@ -1146,7 +1168,7 @@ function defaultCmp(x, y) {
   }
   return 0;
 }
-function updateItem(array, item, cmp) {
+/**function updateItem(array, item, cmp) {
   var pos;
   if (cmp == null) {
     cmp = defaultCmp;
@@ -1197,7 +1219,7 @@ _siftup = function (array, pos, cmp) {
   }
   array[pos] = newitem;
   return _siftdown(array, startpos, pos, cmp);
-};
+};**/
 
 async function randomMaze() {
   1;
@@ -1286,6 +1308,12 @@ function inBounds(cell) {
   return (
     cell[0] >= 0 && cell[1] >= 0 && cell[0] < totalRows && cell[1] < totalCols
   );
+}
+async function Prims() {
+  var cell = [0, 0];
+  var walls = createVisited();
+  front = frontier(cell);
+  while (!front.isEmpty()) {}
 }
 
 async function recursiveDivMaze(bias) {
