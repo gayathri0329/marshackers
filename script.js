@@ -1,6 +1,6 @@
 /*To do list 
 write the codes for algo IDAstar,Orthogonal JPS,Trace
-Implement JPS and greedyBFs for 2 end nodes
+Implement JPS and greedyBFS for 2 end nodes
 implement bi directional Astar,Breadth First Search,Best First Search,Dijkstra
 Add different mazes other than present in this code */
 var totalRows = 25;
