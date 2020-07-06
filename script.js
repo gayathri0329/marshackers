@@ -1,8 +1,9 @@
 /*To do list 
 write the codes for algo IDAstar,Orthogonal JPS,Trace
-Implement JPS and greedyBFS for 2 end nodes
+Implement JPS  2 end nodes
 implement bi directional Astar,Breadth First Search,Best First Search,Dijkstra
-Add different mazes other than present in this code */
+Add different mazes other than present in this code 
+Add Heuristics*/
 var totalRows = 25;
 var totalCols = 40;
 var inProgress = false;
@@ -1159,7 +1160,7 @@ function biBFS() {
   return pathFound;
 }
 
-function defaultCmp(x, y) {
+/**function defaultCmp(x, y) {
   if (x < y) {
     return -1;
   }
@@ -1168,7 +1169,7 @@ function defaultCmp(x, y) {
   }
   return 0;
 }
-/**function updateItem(array, item, cmp) {
+function updateItem(array, item, cmp) {
   var pos;
   if (cmp == null) {
     cmp = defaultCmp;
