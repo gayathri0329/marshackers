@@ -356,6 +356,8 @@ function updateStartBtnText() {
     $("#startBtn").html("Start JPS");
   } else if (algorithm == "Bidirectional Best First Search") {
     $("#startBtn").html("Start Bi BFS");
+  } else if (algorithm == "Bidirectional Breadth First Search") {
+    $("#startBtn").html("Bidirectional Breadth First Search");
   }
   return;
 }
@@ -605,10 +607,22 @@ function BiBreadthFS() {
   var visited = createVisited();
   var visited1 = createVisited();
   var visited2 = createVisited();
+  var walls = createVisited();
+  var l = 0;
   var By_start = 0;
   var By_end = 1;
   var By_end2 = 2;
   var f = -1;
+  var neighbours_endcell = getNeighbors(endCell[0], endCell[1]);
+  if (neighborsThatAreWalls(neighbours_endcell, walls) == 4) {
+    l = 1;
+    console.log("end cell 1 is surrounded");
+  }
+  var neighbours_endcell = getNeighbors(endcell2[0], endcell2[1]);
+  if (neighborsThatAreWalls(neighbours_endcell, walls) == 4) {
+    l = 2;
+    console.log("end cell 2 is surrounded");
+  }
   var arr = new Array(totalRows);
   for (var i = 0; i < arr.length; i++) {
     arr[i] = [];
@@ -627,7 +641,7 @@ function BiBreadthFS() {
   arr[endCell] = By_end;
   arr[endcell2] = By_end2;
 
-  while (!myQueue.empty() && !Q1.empty() && !Q2.empty()) {
+  while (!myQueue.empty() && (!Q1.empty() || !Q2.empty())) {
     var cell = myQueue.dequeue();
     var r = cell[0];
     var c = cell[1];
@@ -666,85 +680,85 @@ function BiBreadthFS() {
         cellsToAnimate.push([neighbors[k], "searching"]);
         myQueue.enqueue(neighbors[k]);
         arr[m][n] = By_start;
-
-        continue;
       }
     }
     if (f == 0 || f == 2) {
       break;
     }
+    if (!Q1.empty()) {
+      var cell = Q1.dequeue();
+      var r = cell[0];
+      var c = cell[1];
+      cellsToAnimate.push([cell, "visited"]);
+      var neighbors = getNeighbors(r, c);
+      for (var k = 0; k < neighbors.length; k++) {
+        var m = neighbors[k][0];
+        var n = neighbors[k][1];
 
-    var cell = Q1.dequeue();
-    var r = cell[0];
-    var c = cell[1];
-    cellsToAnimate.push([cell, "visited"]);
-    var neighbors = getNeighbors(r, c);
-    for (var k = 0; k < neighbors.length; k++) {
-      var m = neighbors[k][0];
-      var n = neighbors[k][1];
-
-      if (visited1[m][n]) {
-        continue;
-      }
-      if (!visited1[m][n]) {
-        if (arr[m][n] == By_start) {
-          pathFound = true;
-          var i = r;
-          var j = c;
-          var l = m;
-          var k = n;
-          var f = 1;
-          console.log("Break2");
-          break;
+        if (visited1[m][n]) {
+          continue;
         }
+        if (!visited1[m][n]) {
+          if (arr[m][n] == By_start) {
+            pathFound = true;
+            var i = r;
+            var j = c;
+            var l = m;
+            var k = n;
+            var f = 1;
+            console.log("Break2");
+            break;
+          }
 
-        visited1[m][n] = true;
-        prev1[m][n] = [r, c];
-        cellsToAnimate.push([neighbors[k], "searching"]);
-        Q1.enqueue(neighbors[k]);
-        arr[m][n] = By_end;
-        continue;
-      }
-    }
-    if (f == 1) {
-      break;
-    }
-    var cell = Q2.dequeue();
-    var r = cell[0];
-    var c = cell[1];
-    cellsToAnimate.push([cell, "visited"]);
-    var neighbors = getNeighbors(r, c);
-    for (var k = 0; k < neighbors.length; k++) {
-      var m = neighbors[k][0];
-      var n = neighbors[k][1];
-
-      if (visited2[m][n]) {
-        continue;
-      }
-      if (!visited2[m][n]) {
-        if (arr[m][n] == By_start) {
-          pathFound = true;
-          var i = r;
-          var j = c;
-          var l = m;
-          var k = n;
-          var f = 3;
-          console.log("Break3");
-          break;
+          visited1[m][n] = true;
+          prev1[m][n] = [r, c];
+          cellsToAnimate.push([neighbors[k], "searching"]);
+          Q1.enqueue(neighbors[k]);
+          arr[m][n] = By_end;
         }
-
-        visited2[m][n] = true;
-        prev2[m][n] = [r, c];
-        cellsToAnimate.push([neighbors[k], "searching"]);
-        Q2.enqueue(neighbors[k]);
-        arr[m][n] = By_end2;
-        continue;
+      }
+      if (f == 1) {
+        break;
       }
     }
-    if (f == 3) {
-      break;
+    if (!Q2.empty()) {
+      var cell = Q2.dequeue();
+      var r = cell[0];
+      var c = cell[1];
+      cellsToAnimate.push([cell, "visited"]);
+      var neighbors = getNeighbors(r, c);
+      for (var k = 0; k < neighbors.length; k++) {
+        var m = neighbors[k][0];
+        var n = neighbors[k][1];
+
+        if (visited2[m][n]) {
+          continue;
+        }
+        if (!visited2[m][n]) {
+          if (arr[m][n] == By_start) {
+            pathFound = true;
+            var i = r;
+            var j = c;
+            var l = m;
+            var k = n;
+            var f = 3;
+            console.log("Break3");
+            break;
+          }
+
+          visited2[m][n] = true;
+          prev2[m][n] = [r, c];
+          cellsToAnimate.push([neighbors[k], "searching"]);
+          Q2.enqueue(neighbors[k]);
+          arr[m][n] = By_end2;
+        }
+      }
+      if (f == 3) {
+        break;
+      }
     }
   }
+
   while (!myQueue.empty()) {
     var cell = myQueue.dequeue();
     var r = cell[0];
