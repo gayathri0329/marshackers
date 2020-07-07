@@ -116,3 +116,9 @@ ul {
 .fun-fact {
   color: darkgreen;
 }
+.spinner {
+  width: 2em;
+}
+#weight_option {
+  color: aliceblue;
+}

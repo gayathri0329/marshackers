@@ -19,6 +19,8 @@ var endcell2 = [11, 30];
 var movingStart = false;
 var movingEnd = false;
 var movingEnd2 = false;
+var heuristic = "Manhattan";
+var weight = 1;
 
 function generateGrid(rows, cols) {
   var grid = "<table>";
@@ -247,7 +249,22 @@ $("#algorithms .dropdown-item").click(function () {
   updateStartBtnText();
   console.log("Algorithm has been changd to: " + algorithm);
 });
+$("#heuristics .dropdown-item").click(function () {
+  if (inProgress) {
+    update("wait");
+    return;
+  }
+  heuristic = $(this).text();
+});
+$("#weight_option .spinner").click(function () {
+  if (inProgress) {
+    update("wait");
+    return;
+  }
+  weight = parseInt($(this).val(), 10);
 
+  console.log("Weight " + weight);
+});
 $("#speed .dropdown-item").click(function () {
   if (inProgress) {
     update("wait");
@@ -414,11 +431,11 @@ function executeAlgo() {
   } else if (algorithm == "Dijkstra") {
     var pathFound = dijkstra();
   } else if (algorithm == "A*") {
-    var pathFound = AStar();
+    var pathFound = AStar(heuristic, weight);
   } else if (algorithm == "Greedy Best-First Search") {
-    var pathFound = greedyBestFirstSearch();
+    var pathFound = greedyBestFirstSearch(heuristic);
   } else if (algorithm == "Jump Point Search") {
-    var pathFound = jumpPointSearch();
+    var pathFound = jumpPointSearch(heuristic);
   } else if (algorithm == "Bidirectional Best First Search") {
     var pathFound = biBFS();
   }
@@ -462,6 +479,26 @@ function createVisited() {
 function cellIsAWall(i, j, cells) {
   var cellNum = i * totalCols + j;
   return $(cells[cellNum]).hasClass("wall");
+}
+function findheuristics(heuristic, x, y, a, b) {
+  if (heuristic == "Manhattan") {
+    console.log("Manhattan");
+    return Math.abs(x - a) + Math.abs(y - b);
+  } else if (heuristic == "Euclidean") {
+    console.log("euclidean");
+    return Math.sqrt(
+      Math.abs(x - a) * Math.abs(x - a) + Math.abs(y - b) * Math.abs(y - b)
+    );
+  } else if (heuristic == "Octile") {
+    console.log("Octile");
+    var F = Math.SQRT2 - 1;
+    return Math.abs(x - a) < Math.abs(y - b)
+      ? F * Math.abs(x - a) + Math.abs(y - b)
+      : F * Math.abs(y - b) + Math.abs(x - a);
+  } else if (heuristic == "Chebyshev") {
+    console.log("Chebyshev");
+    return Math.max(Math.abs(x - a), Math.abs(y - b));
+  }
 }
 
 // Make it iterable?
@@ -640,7 +677,7 @@ function dijkstra() {
   return pathFound;
 }
 
-function AStar() {
+function AStar(heuristic, weight) {
   var pathFound = false;
   var myHeap = new minHeap();
   var prev = createPrev();
@@ -685,13 +722,17 @@ function AStar() {
         cellsToAnimate.push([[m, n], "searching"]);
       }
       var newCost =
-        distances[i][j] + Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
+        distances[i][j] +
+        weight * findheuristics(heuristic, endCell[0], endCell[1], m, n);
+      console.log(weight);
+
       if (newCost < costs[m][n]) {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
       }
       var nc =
-        distances[i][j] + Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
+        distances[i][j] +
+        weight * findheuristics(heuristic, endcell2[0], endcell2[1], m, n);
       if (nc < costs[m][n]) {
         costs[m][n] = nc;
         myHeap.push([nc, [m, n]]);
@@ -739,7 +780,7 @@ function biAstar() {
   var prev2 = createPrev();
 }
 
-function jumpPointSearch() {
+function jumpPointSearch(heuristic) {
   var pathFound = false;
   var myHeap = new minHeap();
   var prev = createPrev();
@@ -771,14 +812,15 @@ function jumpPointSearch() {
       if (visited[m][n]) {
         continue;
       }
-      var newDistance = distances[i][j] + Math.abs(i - m) + Math.abs(j - n);
+      var newDistance = distances[i][j] + findheuristics(heuristic, i, j, m, n);
       if (newDistance < distances[m][n]) {
         distances[m][n] = newDistance;
         prev[m][n] = [i, j];
         cellsToAnimate.push([[m, n], "searching"]);
       }
       var newCost =
-        distances[i][j] + Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
+        distances[i][j] +
+        findheuristics(heuristic, endCell[0], endCell[1], m, n);
       if (newCost < costs[m][n]) {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
@@ -962,7 +1004,7 @@ function checkForcedNeighbor(i, j, direction, neighbors, walls, stored) {
   //return;
 }
 
-function greedyBestFirstSearch() {
+function greedyBestFirstSearch(heuristic) {
   var pathFound = false;
   var myHeap = new minHeap();
   var prev = createPrev();
@@ -1009,8 +1051,8 @@ function greedyBestFirstSearch() {
       if (visited[m][n]) {
         continue;
       }
-      var newCost = Math.abs(endCell[0] - m) + Math.abs(endCell[1] - n);
-      var nc = Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
+      var newCost = findheuristics(heuristic, endCell[0], endCell[1], m, n);
+      var nc = findheuristics(heuristic, endcell2[0], endcell2[1], m, n);
       if (newCost < costs[m][n]) {
         prev[m][n] = [i, j];
         costs[m][n] = newCost;
