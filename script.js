@@ -370,6 +370,8 @@ function updateStartBtnText() {
   } else if (algorithm == "Bidirectional Best First Search") {
     $("#startBtn").html("Start Bi Best First Search");
     return;
+  } else if (algorithm == "IDA*") {
+    $("#startBtn").html("Start IDA*");
   }
 }
 
@@ -457,6 +459,8 @@ function executeAlgo() {
     var pathFound = bidijkstra();
   } else if (algorithm == "Bidirectional Best First Search") {
     var pathFound = bibestfs(heuristic);
+  } else if (algorithm == "IDA*") {
+    var pathFound = idastar(heuristic, weight);
   }
   return pathFound;
 }
@@ -2213,6 +2217,100 @@ function bibestfs(heuristic) {
     }
   }
   return pathFound;
+}
+function idastar(heuristic, weight) {
+  var bound =
+    weight *
+    findheuristics(
+      heuristic,
+      startCell[0],
+      startCell[1],
+      endCell[0],
+      endCell[1]
+    );
+  //var Q = new Queue();
+  var pathFound = false;
+  var t;
+  var visited = createVisited();
+  visited[startCell[0]][startCell[1]] = true;
+  var arr = new Array(totalRows);
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = [];
+  }
+  arr[0] = startCell;
+  //console.log(arr[0]);
+
+  var distances = createDistances();
+  distances[startCell[0]][startCell[1]] = 0;
+  //Q.enqueue(startCell);
+  //console.log(myHeap);
+  while (true) {
+    t = search(arr, 0, bound, visited);
+    if (t == -1) {
+      pathFound = true;
+      console.log("Pathfound");
+      break;
+    }
+    if (t == Infinity) {
+      console.log("Path not found");
+      break;
+    } else {
+      bound = t;
+    }
+  }
+  if (pathFound) {
+    for (var i = 0; i < arr.length; i++) {
+      cellsToAnimate.push([[arr[i][0], arr[i][1]], "success"]);
+    }
+  }
+}
+function search(path, distance, bound, visited) {
+  //console.log("I am in");
+  var cell = path[0];
+  var i = cell[0];
+  var j = cell[1];
+  //console.log(i, j);
+  visited[i][j] = true;
+  //console.log(visited[i][j]);
+  cellsToAnimate.push([[i, j], "visited"]);
+  //console.log(i, j);
+  f =
+    distance + weight * findheuristics(heuristic, endCell[0], endCell[1], i, j);
+  //console.log(i, j);
+
+  if (f > bound) {
+    //console.log(f);
+    return f;
+  }
+  if (i == endCell[0] && j == endCell[1]) {
+    return -1;
+  }
+  //console.log(i, j);
+  var min = Infinity;
+  var neighbors = getNeighbors(i, j);
+  //console.log(neighbors);
+  for (var k = 0; k < neighbors.length; k++) {
+    var m = neighbors[k][0];
+    var n = neighbors[k][1];
+    //console.log(m, n);
+    //console.log(visited[m][n]);
+    if (visited[m][n]) {
+      continue;
+    }
+    visited[m][n] = true;
+    path.unshift(neighbors[k]);
+    cellsToAnimate.push([[m, n], "searching"]);
+    t = search(path, distance + 1, bound, visited);
+    if (t == -1) {
+      return -1;
+    }
+    if (t < min) {
+      min = t;
+    }
+    path.shift();
+  }
+
+  return min;
 }
 
 function defaultCmp(x, y) {
