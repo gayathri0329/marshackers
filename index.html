@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Mars Hackers</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="icon" href="icon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="styles/main.css" />
     <link
       rel="stylesheet"
@@ -47,11 +47,20 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">A*</a>
+              <a class="dropdown-item" href="#">IDA*</a>
+              <a class="dropdown-item" href="#">Bidirectional A*</a>
               <a class="dropdown-item" href="#">Dijkstra</a>
+              <a class="dropdown-item" href="#">Bidirectional Dijkstra</a>
               <a class="dropdown-item" href="#">Greedy Best-First Search</a>
+              <a class="dropdown-item" href="#"
+                >Bidirectional Best First Search</a
+              >
               <a class="dropdown-item" href="#">Breadth-First Search (BFS)</a>
               <a class="dropdown-item" href="#">Depth-First Search (DFS)</a>
               <a class="dropdown-item" href="#">Jump Point Search</a>
+              <a class="dropdown-item" href="#"
+                >Bidirectional Breadth First Search</a
+              >
             </div>
           </li>
           <li class="nav-item dropdown" id="mazes">
@@ -78,6 +87,26 @@
               <a class="dropdown-item" href="#">Simple Spiral</a>
             </div>
           </li>
+          <li class="nav-item dropdown" id="heuristics">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Heuristic
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#"></a>
+              <a class="dropdown-item" href="#">Manhattan</a>
+              <a class="dropdown-item" href="#">Euclidean</a>
+              <a class="dropdown-item" href="#">Octile</a>
+              <a class="dropdown-item" href="#">Chebyshev</a>
+            </div>
+          </li>
           <li class="nav-item dropdown" id="speed">
             <a
               class="nav-link dropdown-toggle speedDisplay"
@@ -94,6 +123,12 @@
               <a class="dropdown-item" href="#">Slow</a>
               <a class="dropdown-item" href="#">Normal</a>
               <a class="dropdown-item" href="#">Fast</a>
+            </div>
+          </li>
+          <li>
+            <div id="weight_option">
+              <input class="spinner" name="weight" value="1" type="number" />
+              <label class="option_label">Weight</label> <br />
             </div>
           </li>
         </ul>
