@@ -9,6 +9,7 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     />
     <link rel="stylesheet" type="text/css" href="styles/magic.min.css" />
+
     <script
       src="https://kit.fontawesome.com/d1f3dd87b7.js"
       crossorigin="anonymous"
@@ -179,6 +180,19 @@
         <div>Unvisited</div>
       </div>
     </div>
+    <div id="instructions_panel" class="panel">
+      <header>
+        <h2 class="header_title">Instructions</h2>
+        <span id="hide_instructions">hide</span>
+      </header>
+      Click within the <span class="white">white</span> grid and drag your mouse
+      to draw obstacles. <br />
+      Drag the <span class="green">green</span> node to set the start position.
+      <br />
+      Drag the <span class="red">red</span> node to set the end position. <br />
+      Choose an algorithm from the right-hand panel. <br />
+      Click Start Search in the lower-right corner to start the animation.
+    </div>
 
     <div class="d-flex flex-column align-items-center" id="bigTableContainer">
       <div id="tableContainer"></div>
@@ -211,5 +225,6 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript" src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </body>
 </html>
