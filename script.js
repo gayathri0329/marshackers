@@ -1492,6 +1492,50 @@ async function randomMaze() {
     inProgress = false;
     return;
 }
+/*  Recursive Backtracking maze generation
+
+//index for starting cell
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+async function recursivebacktracker(){
+  inProgress = true;
+  clearBoard((keepWalls = false));
+
+//Animate edge walls
+for (var i = 0; i < totalRows; i++) {
+  for (var j = 0; j < totalCols; j++) {
+    if (i == 0 || j == 0 || i == totalRows - 1 || j == totalCols - 1) {
+      cellsToAnimate.push([[i, j], "wall"]);
+    }
+  }
+}
+
+var visited = createVisited();
+var walls = makeWalls();
+var cells = [];
+walls[startCell[0]][startCell[1]] = false;
+walls[endCell[0]][endCell[1]] = false;
+visited[startCell[0]][startCell[1]] = true;
+visited[endCell[0]][endCell[1]] = true;
+//choosing the initial cell
+var x = getRandomInt(0,26);
+var y =getRandomInt(0,41);
+cells.push([x,y]);
+var neighbors = getNeighbors(i, j);//getting neighbors of i j
+
+var rand= Math.floor(Math.random() * Math.floor(neighbors.length))//choosing a random neighbor's index
+
+cells.push(neighbors[rand]);
+
+
+
+}
+*/
+
 
 async function spiralMaze() {
     inProgress = true;
