@@ -99,7 +99,7 @@
           </li>
         </ul>
         
-        <div id="play_panel" class="panel right_panel ui-draggable" style="top: 550px; left: 1000px;">
+        <div id="play_panel" class="panel" style="top: 550px; left: 1000px;" draggable="true">
         <button
           class="btn btn-outline-success btn-space"
           type="submit"
@@ -122,12 +122,12 @@
      
     
     
-    <div id="instructions_panel" class="panel ui-draggable">
+    <div id="instructions_panel" class="panel" draggable="true">
 		<header>
 		  <h2 class="header_title">Instructions</h2>
-		 
+	          <span id="hide_instructions">hide</span>
 		</header>
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal" > <span id='close' onclick='this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode); return false;'>hide</span></button>
+	       
 	
 	      <br>
 		Click within the <span class="white">white</span> grid and drag your mouse to draw obstacles. <br>
