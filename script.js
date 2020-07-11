@@ -381,6 +381,8 @@ function updateStartBtnText() {
     return;
   } else if (algorithm == "IDA*") {
     $("#startBtn").html("Start IDA*");
+  } else if (algorithm == "Trace") {
+    $("#startBtn").html("Start Trace");
   }
 }
 
@@ -2384,7 +2386,7 @@ function search(path, distance, bound, visited, x) {
     return min;
   }
 }
-/*function trace() {
+function trace() {
   var pathFound = false;
   var myHeap = new minHeap();
   var prev = createPrev();
@@ -2404,12 +2406,7 @@ function search(path, distance, bound, visited, x) {
     var cell = myHeap.getMin();
     var i = cell[1][0];
     var j = cell[1][1];
-    //If already,visited continue,
-    if (visited[i][j]) {
-      continue;
-    }
-    //else mark it visited and explore it.
-    visited[i][j] = true;
+
     cellsToAnimate.push([[i, j], "visited"]);
     //If reached endCell or endCell2, stop.
     if (i == endCell[0] && j == endCell[1]) {
@@ -2445,12 +2442,11 @@ function search(path, distance, bound, visited, x) {
       }
       //No.of neighbors of current neighbor divided by 9 = a number smaller than 1.
       var u = getNeighbors_ifdiag(m, n).length / 9;
-      console.log(u);
+      //console.log(u);
       //Calculating cost from endCell : Heuristic pre-defined here as Manhattan
       var newCost =
         u * distances[i][j] +
-        Math.abs(endCell[0] - m) +
-        Math.abs(endCell[1] - n);
+        findheuristics(heuristic, endCell[0], endCell[1], m, n);
       if (newCost < costs[m][n]) {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
@@ -2458,46 +2454,46 @@ function search(path, distance, bound, visited, x) {
       //Calculating cost from endCell2 : Heuristic pre-defined here as Manhattan
       var nc =
         u * distances[i][j] +
-        Math.abs(endcell2[0] - m) +
-        Math.abs(endcell2[1] - n);
+        findheuristics(heuristic, endcell2[0], endcell2[1], m, n);
+      Math.abs(endcell2[0] - m) + Math.abs(endcell2[1] - n);
       if (nc < costs[m][n]) {
         costs[m][n] = nc;
         myHeap.push([nc, [m, n]]);
       }
     }
-    // Make any nodes still in the heap "visited"
-    while (!myHeap.isEmpty()) {
-      var cell = myHeap.getMin();
-      var i = cell[1][0];
-      var j = cell[1][1];
-      if (visited[i][j]) {
-        continue;
-      }
-      visited[i][j] = true;
-      cellsToAnimate.push([[i, j], "visited"]);
-    }
-    // If a path was found, illuminate it
-    if (pathFound) {
-      if (k == 0) {
-        var i = endCell[0];
-        var j = endCell[1];
-      }
-      if (k == 1) {
-        var i = endcell2[0];
-        var j = endcell2[1];
-      }
-      cellsToAnimate.push([[i, j], "success"]);
-      while (prev[i][j] != null) {
-        var prevCell = prev[i][j];
-        i = prevCell[0];
-        j = prevCell[1];
-        cellsToAnimate.push([[i, j], "success"]);
-      }
-    }
-    console.log(pathFound);
-    return pathFound;
   }
-}*/
+  // Make any nodes still in the heap "visited"
+  while (!myHeap.isEmpty()) {
+    var cell = myHeap.getMin();
+    var i = cell[1][0];
+    var j = cell[1][1];
+    if (visited[i][j]) {
+      continue;
+    }
+    visited[i][j] = true;
+    cellsToAnimate.push([[i, j], "visited"]);
+  }
+  // If a path was found, illuminate it
+  if (pathFound) {
+    if (k == 0) {
+      var i = endCell[0];
+      var j = endCell[1];
+    }
+    if (k == 1) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+    }
+    cellsToAnimate.push([[i, j], "success"]);
+    while (prev[i][j] != null) {
+      var prevCell = prev[i][j];
+      i = prevCell[0];
+      j = prevCell[1];
+      cellsToAnimate.push([[i, j], "success"]);
+    }
+  }
+  console.log(pathFound);
+  return pathFound;
+}
 
 async function randomMaze() {
   1;

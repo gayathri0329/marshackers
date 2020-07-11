@@ -44,14 +44,14 @@ ul {
 
 .searching {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1cd4b5;
-  border-color: #1cd4b5;
+  background-color: #3ed8be;
+  border-color: #3ed8be;
 }
 
 .visited {
   transition: background-color 0.08s ease-in-out;
-  background-color: #539de2;
-  border-color: #539de2;
+  background-color: #44b5d8;
+  border-color: #44b5d8;
 }
 
 .success {
