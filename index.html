@@ -48,8 +48,8 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">A*</a>
-              <a class="dropdown-item" href="#">IDA*</a>
               <a class="dropdown-item" href="#">Bidirectional A*</a>
+              <a class="dropdown-item" href="#">IDA*</a>
               <a class="dropdown-item" href="#">Dijkstra</a>
               <a class="dropdown-item" href="#">Bidirectional Dijkstra</a>
               <a class="dropdown-item" href="#">Greedy Best-First Search</a>
@@ -57,11 +57,12 @@
                 >Bidirectional Best First Search</a
               >
               <a class="dropdown-item" href="#">Breadth-First Search (BFS)</a>
-              <a class="dropdown-item" href="#">Depth-First Search (DFS)</a>
-              <a class="dropdown-item" href="#">Jump Point Search</a>
               <a class="dropdown-item" href="#"
                 >Bidirectional Breadth First Search</a
               >
+              <a class="dropdown-item" href="#">Depth-First Search (DFS)</a>
+              <a class="dropdown-item" href="#">Trace</a>
+              <a class="dropdown-item" href="#">Jump Point Search</a>
             </div>
           </li>
           <li class="nav-item dropdown" id="mazes">
@@ -129,8 +130,14 @@
           <li>
             <div id="weight_option">
               <input class="spinner" name="weight" value="1" type="number" />
-              <label class="option_label">Weight</label> <br />
+              <label class="option_label">Weight</label>
             </div>
+            <li>
+            <div id="diagonal">
+              <input type="checkbox" class="allow_diagonal" checked />
+              <label class="option_label">Allow Diagonal</label>
+            </div>
+          </li>
           </li>
         </ul>
 
@@ -149,7 +156,6 @@
         >
           Clear Board
         </button>
-        <!-- <button type="button" class="btn btn-outline-danger disabled" type="submit" id="stopBtn">Stop</button> -->
       </div>
     </nav>
 
@@ -190,13 +196,12 @@
       Drag the <span class="green">green</span> node to set the start position.
       <br />
       Drag the <span class="red">red</span> node to set the end position. <br />
-      Choose an algorithm from the right-hand panel. <br />
-      Click Start Search in the lower-right corner to start the animation.
+      Choose an algorithm from the navigation bar. <br />
+      Click Start in the upper-right corner to start the animation.
     </div>
 
     <div class="d-flex flex-column align-items-center" id="bigTableContainer">
       <div id="tableContainer"></div>
-      <!-- <div id="update">Click or drag cells to build walls. <br/>Press the 'Start' button when you finish and have selected an algorithm.</div> -->
     </div>
 
     <div class="d-flex flex-column" id="results">

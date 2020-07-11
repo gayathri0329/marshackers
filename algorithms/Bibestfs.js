@@ -33,12 +33,12 @@ function bibestfs(heuristic) {
   arr[endCell] = By_end;
   arr[endcell2] = By_end2;
   while (!myHeap.isEmpty() && (!Heap1.isEmpty() || !Heap2.isEmpty())) {
-    console.log("Bibestsearch");
+    //console.log("Bibestsearch");
     var cell = myHeap.getMin();
     var i = cell[1][0];
     var j = cell[1][1];
     cellsToAnimate.push([[i, j], "visited"]);
-    var neighbors = getNeighbors(i, j);
+    var neighbors = getNeighbors_ifdiag(i, j);
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
@@ -94,7 +94,7 @@ function bibestfs(heuristic) {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -139,7 +139,7 @@ function bibestfs(heuristic) {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];

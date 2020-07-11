@@ -17,17 +17,6 @@ function greedyBestFirstSearch(heuristic) {
     }
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
-    if (
-      i == endCell[0] &&
-      j == endCell[1] &&
-      i == endcell2[0] &&
-      j == endcell2[1]
-    ) {
-      pathfound = true;
-      k = 2;
-      console.log("Hi");
-      break;
-    }
     if (i == endCell[0] && j == endCell[1]) {
       pathFound = true;
       k = 0;
@@ -38,7 +27,7 @@ function greedyBestFirstSearch(heuristic) {
       k = 1;
       break;
     }
-    var neighbors = getNeighbors(i, j);
+    var neighbors = getNeighbors_ifdiag(i, j);
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
@@ -82,36 +71,15 @@ function greedyBestFirstSearch(heuristic) {
       var i = endcell2[0];
       var j = endcell2[1];
     }
-    if (k == 2) {
-      var i = endCell[0];
-      var j = endCell[1];
-      var a = endcell2[0];
-      var b = endcell2[1];
-    }
-    if (k == 1 || k == 0) {
+
+    cellsToAnimate.push([[i, j], "success"]);
+    while (prev[i][j] != null) {
+      var prevCell = prev[i][j];
+      i = prevCell[0];
+      j = prevCell[1];
       cellsToAnimate.push([[i, j], "success"]);
-      while (prev[i][j] != null) {
-        var prevCell = prev[i][j];
-        i = prevCell[0];
-        j = prevCell[1];
-        cellsToAnimate.push([[i, j], "success"]);
-      }
-    } else if (k == 2) {
-      cellsToAnimate.push([[i, j], "success"]);
-      while (prev[i][j] != null) {
-        var prevCell = prev[i][j];
-        i = prevCell[0];
-        j = prevCell[1];
-        cellsToAnimate.push([[i, j], "success"]);
-      }
-      cellsToAnimate.push([[a, b], "success"]);
-      while (prev[a][b] != null) {
-        var prevCell = prev[i][j];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
     }
   }
+
   return pathFound;
 }

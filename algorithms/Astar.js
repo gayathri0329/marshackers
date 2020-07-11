@@ -20,28 +20,33 @@ function AStar(heuristic, weight) {
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
+      //if first end cell is found
       k = 0;
       pathFound = true;
       break;
     }
+    //if second end cell is found
     if (i == endcell2[0] && j == endcell2[1]) {
       k = 1;
       pathFound = true;
       break;
     }
-    var neighbors = getNeighbors(i, j);
+    var neighbors = getNeighbors_ifdiag(i, j);
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
       if (visited[m][n]) {
         continue;
       }
-      var newDistance = distances[i][j] + 1;
+      var newDistance =
+        distances[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
+
       if (newDistance < distances[m][n]) {
         distances[m][n] = newDistance;
         prev[m][n] = [i, j];
         cellsToAnimate.push([[m, n], "searching"]);
       }
+
       var newCost =
         distances[i][j] +
         weight * findheuristics(heuristic, endCell[0], endCell[1], m, n);
@@ -51,6 +56,7 @@ function AStar(heuristic, weight) {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
       }
+
       var nc =
         distances[i][j] +
         weight * findheuristics(heuristic, endcell2[0], endcell2[1], m, n);

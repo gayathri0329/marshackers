@@ -15,21 +15,10 @@ function BiBreadthFS() {
   var By_end = 1;
   var By_end2 = 2;
   var f = -1;
-  /*var neighbours_endcell = getNeighbors(endCell[0], endCell[1]);
-  if (neighborsThatAreWalls(neighbours_endcell, walls) == 4) {
-    l = 1;
-    console.log("end cell 1 is surrounded");
-  }
-  var neighbours_endcell = getNeighbors(endcell2[0], endcell2[1]);
-  if (neighborsThatAreWalls(neighbours_endcell, walls) == 4) {
-    l = 2;
-    console.log("end cell 2 is surrounded");
-  }*/
   var arr = new Array(totalRows);
   for (var i = 0; i < arr.length; i++) {
     arr[i] = [];
   }
-  //console.log("1111");
   myQueue.enqueue(startCell);
   Q1.enqueue(endCell);
   Q2.enqueue(endcell2);
@@ -48,42 +37,46 @@ function BiBreadthFS() {
     var r = cell[0];
     var c = cell[1];
     cellsToAnimate.push([cell, "visited"]);
-    var neighbors = getNeighbors(r, c);
+    var neighbors = getNeighbors_ifdiag(r, c); //get neighbours
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
 
       if (visited[m][n]) {
+        //if the neighbour already visited continue
         continue;
       }
       if (!visited[m][n]) {
         if (arr[m][n] == By_end) {
+          //if the neighbour was visited by first end cell
           pathFound = true;
-          var i = r;
+          var i = r; //store the position of the cell
           var j = c;
-          var l = m;
+          var l = m; //store the position of the neighbour
           var k = n;
-          f = 0;
-          console.log("break1");
+          f = 0; //if first end cell was found
+          //console.log("break1");
           break;
         }
         if (arr[m][n] == By_end2) {
+          //if the neighbour was visited by second end cell
           pathFound = true;
-          var i = r;
+          var i = r; //store the position of the cell
           var j = c;
-          var l = m;
+          var l = m; //store the position of the neighbour
           var k = n;
-          f = 2;
-          console.log("break4");
+          f = 2; //if second endcell was found
+          //console.log("break4");
           break;
         }
-        visited[m][n] = true;
+        visited[m][n] = true; //set the neighbour as visited
         prev[m][n] = [r, c];
         cellsToAnimate.push([neighbors[k], "searching"]);
-        myQueue.enqueue(neighbors[k]);
+        myQueue.enqueue(neighbors[k]); //add the neighbbour to the queue
         arr[m][n] = By_start;
       }
     }
+    /*if the start cell found the first end cell or second end cell then break out oif the loop*/
     if (f == 0 || f == 2) {
       break;
     }
@@ -92,7 +85,7 @@ function BiBreadthFS() {
       var r = cell[0];
       var c = cell[1];
       cellsToAnimate.push([cell, "visited"]);
-      var neighbors = getNeighbors(r, c);
+      var neighbors = getNeighbors_ifdiag(r, c);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -102,13 +95,14 @@ function BiBreadthFS() {
         }
         if (!visited1[m][n]) {
           if (arr[m][n] == By_start) {
+            //if the neighbour was visited by start cell
             pathFound = true;
             var i = r;
             var j = c;
             var l = m;
             var k = n;
             var f = 1;
-            console.log("Break2");
+            //console.log("Break2");
             break;
           }
 
@@ -128,7 +122,7 @@ function BiBreadthFS() {
       var r = cell[0];
       var c = cell[1];
       cellsToAnimate.push([cell, "visited"]);
-      var neighbors = getNeighbors(r, c);
+      var neighbors = getNeighbors_ifdiag(r, c);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -138,13 +132,14 @@ function BiBreadthFS() {
         }
         if (!visited2[m][n]) {
           if (arr[m][n] == By_start) {
+            //if the neighbour was visited by start cell
             pathFound = true;
             var i = r;
             var j = c;
             var l = m;
             var k = n;
             var f = 3;
-            console.log("Break3");
+            //console.log("Break3");
             break;
           }
 
@@ -180,8 +175,8 @@ function BiBreadthFS() {
     cellsToAnimate.push([cell, "visited"]);
   }
   if (pathFound == true) {
-    console.log(i);
-    console.log(j);
+    //console.log(i);
+    //console.log(j);
     cellsToAnimate.push([[i, j], "success"]);
     cellsToAnimate.push([[l, k], "success"]);
     var r = i;

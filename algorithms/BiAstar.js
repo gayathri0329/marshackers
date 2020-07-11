@@ -41,13 +41,13 @@ function biAStar(heuristic, weight) {
   arr[startCell] = By_start;
   arr[endCell] = By_end;
   arr[endcell2] = By_end2;
-  //var k = -1;
+
   while (!myHeap.isEmpty() && (!Heap1.isEmpty() || !Heap2.isEmpty())) {
     var cell = myHeap.getMin();
     var i = cell[1][0];
     var j = cell[1][1];
     cellsToAnimate.push([[i, j], "visited"]);
-    var neighbors = getNeighbors(i, j);
+    var neighbors = getNeighbors_ifdiag(i, j);
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
@@ -76,7 +76,8 @@ function biAStar(heuristic, weight) {
         console.log("break4");
         break;
       }
-      var newDistance = distances[i][j] + 1;
+      var newDistance =
+        distances[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
       if (newDistance < distances[m][n]) {
         distances[m][n] = newDistance;
         prev[m][n] = [i, j];
@@ -108,7 +109,7 @@ function biAStar(heuristic, weight) {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -126,7 +127,8 @@ function biAStar(heuristic, weight) {
           console.log("break2");
           break;
         }
-        var newDistance = distances1[i][j] + 1;
+        var newDistance =
+          distances1[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
         if (newDistance < distances1[m][n]) {
           distances1[m][n] = newDistance;
           prev1[m][n] = [i, j];
@@ -152,7 +154,7 @@ function biAStar(heuristic, weight) {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -170,7 +172,9 @@ function biAStar(heuristic, weight) {
           console.log("break,,,");
           break;
         }
-        var newDistance = distances2[i][j] + 1;
+        var newDistance =
+          distances2[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
+
         if (newDistance < distances2[m][n]) {
           distances2[m][n] = newDistance;
           prev2[m][n] = [i, j];

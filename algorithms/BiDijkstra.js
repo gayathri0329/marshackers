@@ -41,7 +41,7 @@ function bidijkstra() {
     var i = cell[1][0];
     var j = cell[1][1];
     cellsToAnimate.push([[i, j], "visited"]);
-    var neighbors = getNeighbors(i, j);
+    var neighbors = getNeighbors_ifdiag(i, j);
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
@@ -56,22 +56,23 @@ function bidijkstra() {
         var l = m;
         var k = n;
         f = 0;
-        console.log("break1");
+        //console.log("break1");
         break;
       }
       if (arr[m][n] == By_end2) {
         //if the node is already visited by second end
         pathFound = true;
-        var p = i;
+        var p = i; //store the position of the cell
         var q = j;
-        var l = m;
+        var l = m; //store the position of the neighbour
         var k = n;
         f = 2;
-        console.log("break4");
+        //console.log("break4");
         break;
       }
       visited[m][n] = true;
-      var newDistance = distances[i][j] + 1;
+      var newDistance =
+        distances[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
       if (newDistance < distances[m][n]) {
         distances[m][n] = newDistance;
         prev[m][n] = [i, j];
@@ -88,7 +89,7 @@ function bidijkstra() {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -98,16 +99,17 @@ function bidijkstra() {
         if (arr[m][n] == By_start) {
           //if the node is already visited by first end
           pathFound = true;
-          var p = i;
+          var p = i; //store the position of the cell
           var q = j;
-          var l = m;
+          var l = m; //store the position of the neighbour
           var k = n;
           f = 1;
-          console.log("break///");
+          //console.log("break///");
           break;
         }
         visited1[m][n] = true;
-        var newDistance = distances1[i][j] + 1;
+        var newDistance =
+          distances1[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
         if (newDistance < distances1[m][n]) {
           distances1[m][n] = newDistance;
           prev1[m][n] = [i, j];
@@ -125,7 +127,7 @@ function bidijkstra() {
       var i = cell[1][0];
       var j = cell[1][1];
       cellsToAnimate.push([[i, j], "visited"]);
-      var neighbors = getNeighbors(i, j);
+      var neighbors = getNeighbors_ifdiag(i, j);
       for (var k = 0; k < neighbors.length; k++) {
         var m = neighbors[k][0];
         var n = neighbors[k][1];
@@ -135,16 +137,17 @@ function bidijkstra() {
         if (arr[m][n] == By_start) {
           //if the node is already visited by first end
           pathFound = true;
-          var p = i;
+          var p = i; //store the position of the cell
           var q = j;
-          var l = m;
+          var l = m; //store the position of the neighbour
           var k = n;
           f = 3;
-          console.log("break3");
+          //console.log("break3");
           break;
         }
         visited2[m][n] = true;
-        var newDistance = distances2[i][j] + 1;
+        var newDistance =
+          distances2[i][j] + (m - i === 0 || n - i === 0 ? 1 : Math.SQRT2); //if diagonal neighbour add distance as root 2
         if (newDistance < distances2[m][n]) {
           distances2[m][n] = newDistance;
           prev2[m][n] = [i, j];
@@ -213,7 +216,7 @@ function bidijkstra() {
       }
     } else if (f == 1) {
       while (prev1[r][c] != null) {
-        console.log("I am in");
+        //console.log("I am in");
         var prevCell = prev1[r][c];
         r = prevCell[0];
         c = prevCell[1];
@@ -227,7 +230,7 @@ function bidijkstra() {
       }
     } else if (f == 2) {
       while (prev[r][c] != null) {
-        console.log("I am in");
+        //console.log("I am in");
         var prevCell = prev[r][c];
         r = prevCell[0];
         c = prevCell[1];
@@ -241,7 +244,7 @@ function bidijkstra() {
       }
     } else if (f == 3) {
       while (prev2[r][c] != null) {
-        console.log("I am in");
+        //console.log("I am in");
         var prevCell = prev2[r][c];
         r = prevCell[0];
         c = prevCell[1];

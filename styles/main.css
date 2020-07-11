@@ -7,6 +7,7 @@ td {
   border: 1px solid #79d9ce;
   width: 25px;
   height: 25px;
+  background-color: white;
 }
 
 .key {
@@ -49,7 +50,7 @@ ul {
 
 .visited {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1bacac;
+  background-color: #539de2;
   border-color: #539de2;
 }
 
@@ -108,11 +109,6 @@ ul {
 #length {
   padding: 3px;
 }
-
-#infoModalBtn {
-  margin-left: 20px;
-}
-
 .fun-fact {
   color: darkgreen;
 }
@@ -159,4 +155,12 @@ ul {
 
 .red {
   color: #ff9166;
+}
+#diagonal {
+  padding-left: 10px;
+  color: aliceblue;
+}
+input.allow_diagonal {
+  width: 20px;
+  height: 20px;
 }
