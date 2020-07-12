@@ -2848,7 +2848,7 @@ function getNeighbors_ifdiag(i, j) {
 }
 
 async function animateCells() {
-  console.log("Animate cells");
+  //console.log("Animate cells");
   animationState = null;
   var cells = $("#tableContainer").find("td");
   var startCellIndex = startCell[0] * totalCols + startCell[1];
