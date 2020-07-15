@@ -1,21 +1,22 @@
 body {
-  padding-top: 80px;
+  padding-top: 30px;
   height: 100%;
 }
 
 td {
   border: 1px solid #79d9ce;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
 }
 
 .key {
   border: 1px solid #79d9ce;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin-right: 10px;
+  background-color: white;
 }
-
 ul {
   list-style-type: none;
 }
@@ -43,14 +44,14 @@ ul {
 
 .searching {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1cd4b5;
-  border-color: #1cd4b5;
+  background-color: #3ed8be;
+  border-color: #3ed8be;
 }
 
 .visited {
   transition: background-color 0.08s ease-in-out;
-  background-color: #1bacac;
-  border-color: #539de2;
+  background-color: #44b5d8;
+  border-color: #44b5d8;
 }
 
 .success {
@@ -60,17 +61,26 @@ ul {
 }
 
 .start {
-  background-color: green;
-  border-color: green;
+  background: url(Rover.png);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 
 .end {
-  background-color: red;
-  border-color: red;
+  background: url(alien.svg);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 .end2 {
-  background-color: red;
-  border-color: red;
+  background: url(alien.svg);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 
 #bigTableContainer {
@@ -108,11 +118,61 @@ ul {
 #length {
   padding: 3px;
 }
-
-#infoModalBtn {
-  margin-left: 20px;
-}
-
 .fun-fact {
   color: darkgreen;
+}
+.spinner {
+  width: 2em;
+}
+#weight_option {
+  padding-top: 5px;
+  padding-left: 20px;
+  color: aliceblue;
+}
+.panel {
+  position: fixed;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+#instructions_panel {
+  top: 60px;
+  left: 20px;
+  width: 550px;
+}
+
+#hide_instructions {
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  font-size: 90%;
+  cursor: pointer;
+}
+
+#hide_instruction:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.white {
+  color: #fff;
+}
+
+.green {
+  color: lightgreen;
+}
+
+.red {
+  color: #e05f5f;
+}
+#diagonal {
+  padding-top: 8px;
+  padding-left: 20px;
+  color: aliceblue;
+}
+input.allow_diagonal {
+  width: 20px;
+  height: 20px;
 }
