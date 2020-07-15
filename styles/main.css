@@ -1,22 +1,22 @@
 body {
-  padding-top: 80px;
+  padding-top: 30px;
   height: 100%;
 }
 
 td {
   border: 1px solid #79d9ce;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   background-color: white;
 }
 
 .key {
   border: 1px solid #79d9ce;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin-right: 10px;
+  background-color: white;
 }
-
 ul {
   list-style-type: none;
 }
@@ -61,17 +61,26 @@ ul {
 }
 
 .start {
-  background-color: green;
-  border-color: green;
+  background: url(Rover.png);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 
 .end {
-  background-color: red;
-  border-color: red;
+  background: url(alien.svg);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 .end2 {
-  background-color: red;
-  border-color: red;
+  background: url(alien.svg);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 
 #bigTableContainer {
@@ -116,6 +125,8 @@ ul {
   width: 2em;
 }
 #weight_option {
+  padding-top: 5px;
+  padding-left: 20px;
   color: aliceblue;
 }
 .panel {
@@ -150,14 +161,15 @@ ul {
 }
 
 .green {
-  color: #0d0;
+  color: lightgreen;
 }
 
 .red {
-  color: #ff9166;
+  color: #e05f5f;
 }
 #diagonal {
-  padding-left: 10px;
+  padding-top: 8px;
+  padding-left: 20px;
   color: aliceblue;
 }
 input.allow_diagonal {

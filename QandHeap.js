@@ -1,4 +1,4 @@
-function Queue() {
+export function Queue() {
   this.stack = new Array();
   this.dequeue = function () {
     return this.stack.pop();
@@ -16,7 +16,7 @@ function Queue() {
   };
 }
 
-function minHeap() {
+export function minHeap() {
   this.heap = [];
   this.isEmpty = function () {
     return this.heap.length == 0;

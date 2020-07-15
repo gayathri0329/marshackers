@@ -98,3 +98,5 @@ function AStar(heuristic, weight) {
   }
   return pathFound;
 }
+
+module.exports = AStar;
