@@ -19,6 +19,7 @@ var movingEnd2 = false;
 var heuristic = "Manhattan";
 var weight = 1;
 var allow_diag = true;
+var dont_cross_corners = true;
 
 function generateGrid(rows, cols) {
   var grid = "<table>";
@@ -306,6 +307,14 @@ $(".allow_diagonal").click(function () {
   allow_diag = $(this).is(":checked");
   console.log(allow_diag);
 });
+$(".dont_cross").click(function () {
+  if (inProgress) {
+    update("wait");
+    return;
+  }
+  dont_cross_corners = $(this).is(":checked");
+  console.log(dont_cross_corners);
+});
 
 /* ----------------- */
 /* --- FUNCTIONS --- */
@@ -538,6 +547,12 @@ function findheuristics(heuristic, x, y, a, b) {
   }
 }
 
+/* ----------------- */
+/* --- ALGORITHMS --- */
+/* ----------------- */
+
+/*Depth First Search*/
+
 function DFS(i, j, visited) {
   if (
     (i == endCell[0] && j == endCell[1]) ||
@@ -564,6 +579,7 @@ function DFS(i, j, visited) {
   return false;
 }
 
+/*Breadth First Search*/
 function BFS() {
   var pathFound = false;
   var myQueue = new Queue();
@@ -636,6 +652,7 @@ function BFS() {
   }
   return pathFound;
 }
+/*Bidirectional Breadth First Search*/
 function BiBreadthFS() {
   var pathFound = false;
   var myQueue = new Queue();
@@ -881,7 +898,7 @@ function BiBreadthFS() {
   }
   return pathFound;
 }
-
+/*Dijkstra*/
 function dijkstra() {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -963,6 +980,7 @@ function dijkstra() {
   }
   return pathFound;
 }
+/*Bidirectional Dijkstra*/
 function bidijkstra() {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -1225,6 +1243,7 @@ function bidijkstra() {
   }
   return pathFound;
 }
+/*Astar */
 function AStar(heuristic, weight) {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -1320,7 +1339,7 @@ function AStar(heuristic, weight) {
   }
   return pathFound;
 }
-
+/*Bidirectional Astar*/
 function biAStar(heuristic, weight) {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -1618,6 +1637,7 @@ function biAStar(heuristic, weight) {
   }
   return pathFound;
 }
+/*Jump Point search*/
 function jumpPointSearch(heuristic) {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -1839,7 +1859,7 @@ function checkForcedNeighbor(i, j, direction, neighbors, walls, stored) {
   }
   //return;
 }
-
+/*Best First Search*/
 function greedyBestFirstSearch(heuristic) {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -1925,6 +1945,7 @@ function greedyBestFirstSearch(heuristic) {
 
   return pathFound;
 }
+/*Bidirectional best first Search*/
 function bibestfs(heuristic) {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -2206,6 +2227,7 @@ function bibestfs(heuristic) {
   }
   return pathFound;
 }
+/*Idastar*/
 function idastar(heuristic) {
   //weight = 1;
   var bound = findheuristics(
@@ -2386,6 +2408,7 @@ function search(path, distance, bound, visited, x) {
     return min;
   }
 }
+/*Trace*/
 function trace() {
   var pathFound = false;
   var myHeap = new minHeap();
@@ -2494,7 +2517,7 @@ function trace() {
   console.log(pathFound);
   return pathFound;
 }
-
+/*Random Maze*/
 async function randomMaze() {
   1;
   inProgress = true;
@@ -2547,7 +2570,7 @@ async function randomMaze() {
   inProgress = false;
   return;
 }
-
+/*Spiral Maze*/
 async function spiralMaze() {
   inProgress = true;
   clearBoard((keepWalls = false));
@@ -2585,7 +2608,7 @@ function inBounds(cell) {
     cell[0] >= 0 && cell[1] >= 0 && cell[0] < totalRows && cell[1] < totalCols
   );
 }
-
+/*Recursive Division*/
 async function recursiveDivMaze(bias) {
   inProgress = true;
   clearBoard((keepWalls = false));
@@ -2818,19 +2841,24 @@ function getNeighbors(i, j) {
 }
 function getNeighbors_ifdiag(i, j) {
   var neighbors = [];
-  if (i > 0) {
+  var visited = createVisited();
+  if (i > 0 && visited[i - 1][j] == false) {
+    var n0 = true;
     neighbors.push([i - 1, j]);
   }
-  if (j > 0) {
+  if (j > 0 && visited[i][j - 1] == false) {
+    var n1 = true;
     neighbors.push([i, j - 1]);
   }
-  if (i < totalRows - 1) {
+  if (i < totalRows - 1 && visited[i + 1][j] == false) {
+    var n2 = true;
     neighbors.push([i + 1, j]);
   }
-  if (j < totalCols - 1) {
+  if (j < totalCols - 1 && visited[i][j + 1] == false) {
+    var n3 = true;
     neighbors.push([i, j + 1]);
   }
-  if (allow_diag == true) {
+  if (allow_diag == true && dont_cross_corners == false) {
     if (i > 0 && j > 0) {
       neighbors.push([i - 1, j - 1]);
     }
@@ -2841,6 +2869,20 @@ function getNeighbors_ifdiag(i, j) {
       neighbors.push([i + 1, j + 1]);
     }
     if (i < totalRows - 1 && j > 0) {
+      neighbors.push([i + 1, j - 1]);
+    }
+  }
+  if (dont_cross_corners == true && allow_diag == true) {
+    if (i > 0 && j > 0 && (n0 === true || n1 == true)) {
+      neighbors.push([i - 1, j - 1]);
+    }
+    if (i > 0 && j < totalCols - 1 && (n0 == true || n3 == true)) {
+      neighbors.push([i - 1, j + 1]);
+    }
+    if (i < totalRows - 1 && j < totalCols - 1 && (n2 == true || n3 == true)) {
+      neighbors.push([i + 1, j + 1]);
+    }
+    if (i < totalRows - 1 && j > 0 && (n1 == true || n2 == true)) {
       neighbors.push([i + 1, j - 1]);
     }
   }
