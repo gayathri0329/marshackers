@@ -422,7 +422,7 @@ function updateResults(duration, pathFound, length) {
       $("#results").css("background-color", "#ff6961");
       $("#resultsIcon").addClass("fas fa-times");
     }
-    $("#duration").text("Duration: " + duration + " s");
+    $("#duration").text("Duration: " + duration + "ms");
     $("#length").text("Length: " + length);
     $("#results").removeClass(firstAnimation);
     $("#results").addClass(secondAnimation);
@@ -2300,7 +2300,7 @@ function idastar(heuristic) {
     }
   }
   if (y1 == "endcell1" && arr.length <= arr1.length) {
-    console.log("First cell loop");
+    //console.log("First cell loop");
     if (pathFound1) {
       for (var i = 0; i < arr.length; i++) {
         cellsToAnimate.push([[arr[i][0], arr[i][1]], "success"]);
@@ -2517,6 +2517,9 @@ function trace() {
   console.log(pathFound);
   return pathFound;
 }
+/* ----------------- */
+/* --- MAZES --- */
+/* ----------------- */
 /*Random Maze*/
 async function randomMaze() {
   1;

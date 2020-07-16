@@ -17,7 +17,8 @@
   </head>
   <body>
     <nav
-      class="navbar navbar-expand-sm fixed-top navbar-dark bg-dark"
+      class="navbar navbar-expand-sm fixed-top navbar-light"
+      style="background-color: rgb(69, 7, 94);"
       id="myNavbar"
     >
       <button
@@ -43,6 +44,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="color: white;"
             >
               Algorithms
             </a>
@@ -74,6 +76,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="color: white;"
             >
               Mazes
             </a>
@@ -98,6 +101,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="color: white;"
             >
               Heuristic
             </a>
@@ -118,6 +122,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="color: white;"
             >
               Speed: Fast
             </a>
@@ -132,7 +137,9 @@
               <input class="spinner" name="weight" value="1" type="number" />
               <label class="option_label">Weight</label>
             </div>
-            <li>
+          </li>
+
+          <li>
             <div id="diagonal">
               <input type="checkbox" class="allow_diagonal" checked />
               <label class="option_label">Allow Diagonal</label>
@@ -143,8 +150,6 @@
               <input type="checkbox" class="dont_cross" checked />
               <label class="option_label">Don't cross corners</label>
             </div>
-          </li>
-          
           </li>
         </ul>
 
@@ -157,7 +162,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-outline-warning btn-space"
+          class="btn btn-outline-info btn-space"
           type="submit"
           id="clearBtn"
         >
@@ -166,7 +171,6 @@
       </div>
     </nav>
 
-    
     <div id="instructions_panel" class="panel">
       <header>
         <h2 class="header_title">Instructions</h2>
