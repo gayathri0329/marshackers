@@ -4,10 +4,9 @@ body {
 }
 
 td {
-  border: 1px solid #79d9ce;
+  border: 1px solid #9e1919;
   width: 30px;
   height: 30px;
-  background-color: white;
 }
 
 .key {
@@ -32,8 +31,10 @@ ul {
 
 .wall {
   transition: background-color 0.1s ease-in-out;
-  background-color: #262b28;
-  border-color: #262b28;
+  background: url(rocks.svg);
+  width: 30px;
+  height: 30px;
+  background-size: 30px 30px;
 }
 
 .none {
@@ -85,6 +86,7 @@ ul {
 
 #bigTableContainer {
   margin-top: 30px;
+  background-image: url(mars.jpg);
 }
 
 .custom-section {
@@ -98,7 +100,7 @@ ul {
 #results {
   height: 87px;
   width: 120px;
-  background-color: #79d9ce;
+  background-color: #af0d0d;
   position: fixed;
   right: 10px;
   bottom: 10px;
@@ -139,7 +141,7 @@ ul {
   cursor: default;
 }
 #instructions_panel {
-  top: 60px;
+  top: 70px;
   left: 20px;
   width: 550px;
 }
