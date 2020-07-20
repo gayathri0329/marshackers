@@ -180,7 +180,11 @@ $("td").mouseenter(function () {
       moveStartOrEnd(endCellIndex, index, "end");
     } else if (movingEnd2 && index != startCellIndex && index != endCellIndex) {
       moveStartOrEnd(endcellindex2, index, "end2");
-    } else if (index != startCellIndex && index != endCellIndex) {
+    } else if (
+      index != startCellIndex &&
+      index != endCellIndex &&
+      index != endcellindex2
+    ) {
       $(this).toggleClass("wall");
     }
   }
@@ -229,7 +233,6 @@ $("#startBtn").click(function () {
   }
   traverseGraph(algorithm);
 });
-
 $("#clearBtn").click(function () {
   if (inProgress) {
     update("wait");
@@ -350,7 +353,6 @@ function moveEnd(prevIndex, newIndex) {
   startCell = [newStartX, newStartY];
   return;
 }
-
 function updateSpeedDisplay() {
   if (animationSpeed == "Slow") {
     $(".speedDisplay").text("Speed: Slow");
@@ -546,6 +548,98 @@ function findheuristics(heuristic, x, y, a, b) {
     return Math.max(Math.abs(x - a), Math.abs(y - b));
   }
 }
+function path(pathFound, k, prev) {
+  if (pathFound) {
+    if (k == 0) {
+      //if the first endcell was found
+      var r = endCell[0];
+      var c = endCell[1];
+    }
+    if (k == 1) {
+      //if the second end cell was found
+      var r = endcell2[0];
+      var c = endcell2[1];
+    }
+    cellsToAnimate.push([[r, c], "success"]);
+    while (prev[r][c] != null) {
+      var prevCell = prev[r][c];
+      r = prevCell[0];
+      c = prevCell[1];
+      cellsToAnimate.push([[r, c], "success"]);
+    }
+  }
+  return pathFound;
+}
+function bipath(pathFound, f, i, j, l, k, prev, prev1, prev2) {
+  if (pathFound == true) {
+    //console.log(i);
+    //console.log(j);
+    cellsToAnimate.push([[i, j], "success"]);
+    cellsToAnimate.push([[l, k], "success"]);
+    var r = i;
+    var c = j;
+    var a = l;
+    var b = k;
+    if (f == 0) {
+      while (prev[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev1[a][b] != null) {
+        var prevCell = prev1[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 1) {
+      while (prev1[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev1[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev[a][b] != null) {
+        var prevCell = prev[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 2) {
+      while (prev[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev2[a][b] != null) {
+        var prevCell = prev2[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 3) {
+      while (prev2[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev2[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev[a][b] != null) {
+        var prevCell = prev[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    }
+  }
+  return pathFound;
+}
 
 /* ----------------- */
 /* --- ALGORITHMS --- */
@@ -631,27 +725,9 @@ function BFS() {
     cellsToAnimate.push([cell, "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    if (k == 0) {
-      //if the first endcell was found
-      var r = endCell[0];
-      var c = endCell[1];
-    }
-    if (k == 1) {
-      //if the second end cell was found
-      var r = endcell2[0];
-      var c = endcell2[1];
-    }
-    cellsToAnimate.push([[r, c], "success"]);
-    while (prev[r][c] != null) {
-      var prevCell = prev[r][c];
-      r = prevCell[0];
-      c = prevCell[1];
-      cellsToAnimate.push([[r, c], "success"]);
-    }
-  }
-  return pathFound;
+  return path(pathFound, k, prev);
 }
+
 /*Bidirectional Breadth First Search*/
 function BiBreadthFS() {
   var pathFound = false;
@@ -829,74 +905,7 @@ function BiBreadthFS() {
     var c = cell[1];
     cellsToAnimate.push([cell, "visited"]);
   }
-  if (pathFound == true) {
-    //console.log(i);
-    //console.log(j);
-    cellsToAnimate.push([[i, j], "success"]);
-    cellsToAnimate.push([[l, k], "success"]);
-    var r = i;
-    var c = j;
-    var a = l;
-    var b = k;
-    if (f == 0) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev1[a][b] != null) {
-        var prevCell = prev1[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 1) {
-      while (prev1[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev1[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 2) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev2[a][b] != null) {
-        var prevCell = prev2[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 3) {
-      while (prev2[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev2[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    }
-  }
-  return pathFound;
+  return bipath(pathFound, f, i, j, l, k, prev, prev1, prev2);
 }
 /*Dijkstra*/
 function dijkstra() {
@@ -958,27 +967,7 @@ function dijkstra() {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    if (k == 0) {
-      //if first end cell was found
-      var i = endCell[0];
-      var j = endCell[1];
-    }
-    if (k == 1) {
-      //if second encell was found
-      var i = endcell2[0];
-      var j = endcell2[1];
-    }
-
-    cellsToAnimate.push([[i, j], "success"]);
-    while (prev[i][j] != null) {
-      var prevCell = prev[i][j];
-      i = prevCell[0];
-      j = prevCell[1];
-      cellsToAnimate.push([[i, j], "success"]);
-    }
-  }
-  return pathFound;
+  return path(pathFound, k, prev);
 }
 /*Bidirectional Dijkstra*/
 function bidijkstra() {
@@ -1176,72 +1165,7 @@ function bidijkstra() {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    cellsToAnimate.push([[p, q], "success"]);
-    cellsToAnimate.push([[l, k], "success"]);
-    var r = p;
-    var c = q;
-    var a = l;
-    var b = k;
-    if (f == 0) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev1[a][b] != null) {
-        var prevCell = prev1[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 1) {
-      while (prev1[r][c] != null) {
-        //console.log("I am in");
-        var prevCell = prev1[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 2) {
-      while (prev[r][c] != null) {
-        //console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev2[a][b] != null) {
-        var prevCell = prev2[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 3) {
-      while (prev2[r][c] != null) {
-        //console.log("I am in");
-        var prevCell = prev2[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    }
-  }
-  return pathFound;
+  return bipath(pathFound, f, p, q, l, k, prev, prev1, prev2);
 }
 /*Astar */
 function AStar(heuristic, weight) {
@@ -1319,25 +1243,7 @@ function AStar(heuristic, weight) {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    if (k == 0) {
-      var i = endCell[0];
-      var j = endCell[1];
-    }
-    if (k == 1) {
-      var i = endcell2[0];
-      var j = endcell2[1];
-    }
-
-    cellsToAnimate.push([[i, j], "success"]);
-    while (prev[i][j] != null) {
-      var prevCell = prev[i][j];
-      i = prevCell[0];
-      j = prevCell[1];
-      cellsToAnimate.push([[i, j], "success"]);
-    }
-  }
-  return pathFound;
+  return path(pathFound, k, prev);
 }
 /*Bidirectional Astar*/
 function biAStar(heuristic, weight) {
@@ -1570,73 +1476,9 @@ function biAStar(heuristic, weight) {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    cellsToAnimate.push([[p, q], "success"]);
-    cellsToAnimate.push([[l, k], "success"]);
-    var r = p;
-    var c = q;
-    var a = l;
-    var b = k;
-    if (f == 0) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev1[a][b] != null) {
-        var prevCell = prev1[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 1) {
-      while (prev1[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev1[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 2) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev2[a][b] != null) {
-        var prevCell = prev2[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 3) {
-      while (prev2[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev2[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    }
-  }
-  return pathFound;
+  return bipath(pathFound, f, p, q, l, k, prev, prev1, prev2);
 }
+
 /*Jump Point search*/
 function jumpPointSearch(heuristic) {
   var pathFound = false;
@@ -1923,27 +1765,8 @@ function greedyBestFirstSearch(heuristic) {
     visited[i][j] = true;
     cellsToAnimate.push([[i, j], "visited"]);
   }
-  // If a path was found, illuminate it
-  if (pathFound) {
-    if (k == 0) {
-      var i = endCell[0];
-      var j = endCell[1];
-    }
-    if (k == 1) {
-      var i = endcell2[0];
-      var j = endcell2[1];
-    }
 
-    cellsToAnimate.push([[i, j], "success"]);
-    while (prev[i][j] != null) {
-      var prevCell = prev[i][j];
-      i = prevCell[0];
-      j = prevCell[1];
-      cellsToAnimate.push([[i, j], "success"]);
-    }
-  }
-
-  return pathFound;
+  return path(pathFound, k, prev);
 }
 /*Bidirectional best first Search*/
 function bibestfs(heuristic) {
@@ -2160,72 +1983,7 @@ function bibestfs(heuristic) {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    cellsToAnimate.push([[p, q], "success"]);
-    cellsToAnimate.push([[l, k], "success"]);
-    var r = p;
-    var c = q;
-    var a = l;
-    var b = k;
-    if (f == 0) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev1[a][b] != null) {
-        var prevCell = prev1[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 1) {
-      while (prev1[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev1[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 2) {
-      while (prev[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev2[a][b] != null) {
-        var prevCell = prev2[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    } else if (f == 3) {
-      while (prev2[r][c] != null) {
-        console.log("I am in");
-        var prevCell = prev2[r][c];
-        r = prevCell[0];
-        c = prevCell[1];
-        cellsToAnimate.push([[r, c], "success"]);
-      }
-      while (prev[a][b] != null) {
-        var prevCell = prev[a][b];
-        a = prevCell[0];
-        b = prevCell[1];
-        cellsToAnimate.push([[a, b], "success"]);
-      }
-    }
-  }
-  return pathFound;
+  return bipath(pathFound, f, p, q, l, k, prev, prev1, prev2);
 }
 /*Idastar*/
 function idastar(heuristic) {
@@ -2314,6 +2072,11 @@ function idastar(heuristic) {
         cellsToAnimate.push([[arr1[i][0], arr1[i][1]], "success"]);
       }
     }
+  }
+  if (pathFound1) {
+    return pathFound1;
+  } else {
+    return pathFound2;
   }
 }
 function search(path, distance, bound, visited, x) {
@@ -2497,25 +2260,7 @@ function trace() {
     cellsToAnimate.push([[i, j], "visited"]);
   }
   // If a path was found, illuminate it
-  if (pathFound) {
-    if (k == 0) {
-      var i = endCell[0];
-      var j = endCell[1];
-    }
-    if (k == 1) {
-      var i = endcell2[0];
-      var j = endcell2[1];
-    }
-    cellsToAnimate.push([[i, j], "success"]);
-    while (prev[i][j] != null) {
-      var prevCell = prev[i][j];
-      i = prevCell[0];
-      j = prevCell[1];
-      cellsToAnimate.push([[i, j], "success"]);
-    }
-  }
-  console.log(pathFound);
-  return pathFound;
+  return path(pathFound, k, prev);
 }
 /* ----------------- */
 /* --- MAZES --- */
@@ -2734,7 +2479,6 @@ function recursiveDivMazeHelper(
       var randCol = jEnd;
     } else {
       var randCol = Math.floor(Math.random() * 2) == 0 ? jStart : jEnd; // random end assignment
-      //var randCol = Math.floor(Math.random() * width) + jStart; // random parition
     }
     for (var j = jStart; j <= jEnd; j++) {
       if (passages[randRow][j]) {

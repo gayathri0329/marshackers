@@ -139,3 +139,97 @@ export function findheuristics(heuristic, x, y, a, b) {
     return Math.max(Math.abs(x - a), Math.abs(y - b));
   }
 }
+
+function path(pathFound, k, prev) {
+  if (pathFound) {
+    if (k == 0) {
+      //if the first endcell was found
+      var r = endCell[0];
+      var c = endCell[1];
+    }
+    if (k == 1) {
+      //if the second end cell was found
+      var r = endcell2[0];
+      var c = endcell2[1];
+    }
+    cellsToAnimate.push([[r, c], "success"]);
+    while (prev[r][c] != null) {
+      var prevCell = prev[r][c];
+      r = prevCell[0];
+      c = prevCell[1];
+      cellsToAnimate.push([[r, c], "success"]);
+    }
+  }
+  return pathFound;
+}
+
+function bipath(pathFound, f, i, j, l, k, prev, prev1, prev2) {
+  if (pathFound == true) {
+    //console.log(i);
+    //console.log(j);
+    cellsToAnimate.push([[i, j], "success"]);
+    cellsToAnimate.push([[l, k], "success"]);
+    var r = i;
+    var c = j;
+    var a = l;
+    var b = k;
+    if (f == 0) {
+      while (prev[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev1[a][b] != null) {
+        var prevCell = prev1[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 1) {
+      while (prev1[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev1[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev[a][b] != null) {
+        var prevCell = prev[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 2) {
+      while (prev[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev2[a][b] != null) {
+        var prevCell = prev2[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    } else if (f == 3) {
+      while (prev2[r][c] != null) {
+        console.log("I am in");
+        var prevCell = prev2[r][c];
+        r = prevCell[0];
+        c = prevCell[1];
+        cellsToAnimate.push([[r, c], "success"]);
+      }
+      while (prev[a][b] != null) {
+        var prevCell = prev[a][b];
+        a = prevCell[0];
+        b = prevCell[1];
+        cellsToAnimate.push([[a, b], "success"]);
+      }
+    }
+  }
+  return pathFound;
+}
