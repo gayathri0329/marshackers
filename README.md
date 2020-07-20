@@ -1,4 +1,4 @@
-# Shortest Path Finding Algorithms
+# Shortest Path Finder
 
 
 One Paragraph of project description goes here
