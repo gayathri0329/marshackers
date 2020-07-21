@@ -1,4 +1,4 @@
-# Path Finding Visualiser- Team- The Mars Hackers
+# Path Finding Visualiser  Team-The Mars Hackers
  
 Our aim of the project is to build a Web-App to help a Mars Rover to find the shortest path .
 
