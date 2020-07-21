@@ -7,14 +7,14 @@ Our aim of the project is to build a Web-App to help a Mars Rover to find the sh
 
 ## Algorithms used to find the path:
 
-Astar
-Best First Search
-Breadth First Search
-Depth First Search
-Dijkstra
-IDAstar
-Jump Point Search
-Trace
+-Astar
+-Best First Search
+-Breadth First Search
+-Depth First Search
+-Dijkstra
+-IDAstar
+-Jump Point Search
+-Trace
 
 
 
