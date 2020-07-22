@@ -1492,6 +1492,7 @@ function jumpPointSearch(heuristic) {
   costs[startCell[0]][startCell[1]] = 0;
   myHeap.push([0, [startCell[0], startCell[1]]]);
   cellsToAnimate.push([[startCell[0], startCell[1]], "searching"]);
+  var k = -1;
   while (!myHeap.isEmpty()) {
     var cell = myHeap.getMin();
     var i = cell[1][0];
@@ -1503,6 +1504,12 @@ function jumpPointSearch(heuristic) {
     cellsToAnimate.push([[i, j], "visited"]);
     if (i == endCell[0] && j == endCell[1]) {
       pathFound = true;
+      k = 1;
+      break;
+    }
+    if (i == endcell2[0] && j == endcell2[1]) {
+      pathFound = true;
+      k = 2;
       break;
     }
     var neighbors = pruneNeighbors(i, j, visited, walls);
@@ -1525,6 +1532,13 @@ function jumpPointSearch(heuristic) {
         costs[m][n] = newCost;
         myHeap.push([newCost, [m, n]]);
       }
+      var nc =
+        distances[i][j] +
+        findheuristics(heuristic, endcell2[0], endcell2[1], m, n);
+      if (nc < costs[m][n]) {
+        costs[m][n] = nc;
+        myHeap.push([nc, [m, n]]);
+      }
     }
   }
   // Make any nodes still in the heap "visited"
@@ -1540,9 +1554,16 @@ function jumpPointSearch(heuristic) {
   }
   // If a path was found, illuminate it:
   if (pathFound) {
-    var i = endCell[0];
-    var j = endCell[1];
-    cellsToAnimate.push([endCell, "success"]);
+    if (k == 1) {
+      var i = endCell[0];
+      var j = endCell[1];
+      cellsToAnimate.push([endCell, "success"]);
+    } else if (k == 2) {
+      var i = endcell2[0];
+      var j = endcell2[1];
+      cellsToAnimate.push([endcell2, "success"]);
+    }
+
     while (prev[i][j] != null) {
       var prevCell = prev[i][j];
       x = prevCell[0];
@@ -1601,7 +1622,11 @@ function pruneNeighbors(i, j, visited, walls) {
         break;
       }
       //Check if same row or column as end cell
-      if ((endCell[0] == i || endCell[1] == c) && !stored[xy]) {
+      if (
+        endCell[0] == i ||
+        endCell[1] == c ||
+        ((endcell2[0] == i || endcell2[1] == c) && !stored[xy])
+      ) {
         neighbors.push([i, c]);
         stored[xy] = true;
         continue;
