@@ -25,3 +25,15 @@ Our aim of the project is to build a Web-App to help a Mars Rover to find the sh
 The pathfinding visualizer supports both diagonal and non diagonal pathfinding.
 
 Simply check the "Allow Diagonal" .
+
+## Speed
+
+You can change the speed of the visualization during runtime.
+
+By default the speed is set to "Fast".
+
+## Don't cross corners
+
+You can choose whether to cross corners of two blocked nodes (nodes with walls).
+
+This option only works if Allow Diagonal option is checked.
