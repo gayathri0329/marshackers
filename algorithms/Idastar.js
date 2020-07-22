@@ -1,5 +1,5 @@
 function idastar(heuristic) {
-  //weight = 1;
+  //bound is the threshold for first endcell
   var bound = findheuristics(
     heuristic,
     startCell[0],
@@ -7,6 +7,7 @@ function idastar(heuristic) {
     endCell[0],
     endCell[1]
   );
+  //bound1 is the threshold of second end cell
   var bound1 = findheuristics(
     heuristic,
     startCell[0],
@@ -14,7 +15,6 @@ function idastar(heuristic) {
     endcell2[0],
     endcell2[1]
   );
-  //var Q = new Queue();
   var pathFound1 = false;
   var pathFound2 = false;
   var t;
@@ -34,11 +34,7 @@ function idastar(heuristic) {
   }
   arr1[0] = startCell;
   //console.log(arr[0]);
-
-  //var distances = createDistances();
-  //distances[startCell[0]][startCell[1]] = 0;
-  //Q.enqueue(startCell);
-  //console.log(myHeap);
+  //looping for first end cell
   while (true) {
     t = search(arr, 0, bound, visited, "endcell");
     if (t == -1) {
@@ -56,6 +52,7 @@ function idastar(heuristic) {
       bound = t;
     }
   }
+  //looping to find second endcell
   while (true) {
     t1 = search(arr1, 0, bound1, visited1, "endcell2");
     if (t1 == -1) {
@@ -101,10 +98,10 @@ function search(path, distance, bound, visited, x) {
     //console.log("endcell1");
     if (f1 > bound) {
       //console.log(f);
-      return f1;
+      return f1; //If the distance plus the heuristic exceeds the current threshold, return this exceeding threshold
     }
     if (i == endCell[0] && j == endCell[1]) {
-      return -1;
+      return -1; //if first end cell is found
     }
   }
   if (x == "endcell2") {
@@ -113,13 +110,13 @@ function search(path, distance, bound, visited, x) {
     //console.log("endcell2");
     if (f2 > bound) {
       //console.log(f);
-      return f2;
+      return f2; //If the distance plus the heuristic exceeds the current threshold, return this exceeding threshold
     }
     if (i == endcell2[0] && j == endcell2[1]) {
-      return -1;
+      return -1; //if second end cell is found
     }
   }
-
+  // checking for first end cell
   if (x == "endcell") {
     //console.log(i, j);
     console.log("endcell1");
@@ -129,25 +126,28 @@ function search(path, distance, bound, visited, x) {
     for (var k = 0; k < neighbors.length; k++) {
       var m = neighbors[k][0];
       var n = neighbors[k][1];
-      //console.log(m, n);
-      //console.log(visited[m][n]);
       if (visited[m][n]) {
-        continue;
+        continue; //if the neighbour cell is already visited
       }
+      //set the neighbour cell to visitd if not
       visited[m][n] = true;
+      //add the neighbour to the beginning of the array
       path.unshift(neighbors[k]);
       cellsToAnimate.push([[m, n], "searching"]);
+      //recursive call
       t = search(path, distance + 1, bound, visited, "endcell");
       if (t == -1) {
-        return -1;
+        return -1; // if the endcell is found
       }
       if (t < min) {
         min = t;
       }
+      //removes the first item of the array
       path.shift();
     }
     return min;
   }
+  //checking for second endcell
   if (x == "endcell2") {
     //console.log(i, j);
     console.log("endcell2");
