@@ -14,7 +14,7 @@ This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding
 
 **Depth First Search** : The DFS algorithm is a recursive algorithm that uses the idea of backtracking. It involves exhaustive searches of all the nodes by going ahead, if possible, else by backtracking.
 
-**Dijkstra**
+**Dijkstra** : It is an unweighted search algorithm.
 
 **IDAstar**
 
@@ -39,3 +39,15 @@ By default the speed is set to "Fast".
 You can choose whether to cross corners of two blocked nodes (nodes with walls).
 
 This option only works if Allow Diagonal option is checked.
+
+## Mazes
+
+**Random**
+
+**Recursive Division**
+
+**Recursive Division(Vertical Skew)**
+
+**Recursive Division(Horizontal Skew)**
+
+**Spiral**
