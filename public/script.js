@@ -1,7 +1,7 @@
 /*To do list 
 Implement JPS for 2 end nodes
 Add different mazes other than present in this code */
-var totalRows = 23;
+var totalRows = 50;
 var totalCols = 51;
 var inProgress = false;
 var cellsToAnimate = [];
