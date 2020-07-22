@@ -20,7 +20,7 @@ This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding
 
 **Jump Point Search**
 
-**Trace**
+**Trace** : Trace algorithm is similar to Astar algorithm. The only difference is instead of weight the heuristic is multiflied by a function which is less than 1.
 
 ## Diagonal
 
@@ -44,7 +44,7 @@ This option only works if Allow Diagonal option is checked.
 
 Bidirectional Search, as the name implies, searches in two directions at the same time: one forward from the initial state and the other backward from the goal.The search stops when searches from both directions meet in the middle.
 
-This project consists of th following bidirctional searches:
+This project consists of th following bidirectional searches:
 
 Astar
 
