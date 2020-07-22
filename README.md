@@ -6,13 +6,11 @@ Our aim of the project is to build a Web-App to help a Mars Rover to find the sh
 
 **Astar** : It is a weighted algorithm that uses heuristic functions to find the shortest path. A* works by making a lowest-cost path tree from the start node to the target node. What makes A* different and better for many searches is that for each node, Astar uses a function f(n) that gives an estimate of the total cost of a path using that node.It uses a heap for implementation.
 
-**Bidirectional Astar** : It searches from both sides.
+**Best First Search** : It is an unweighted algorithm.It is the combination of depth-first search and breadth-first search algorithms. It uses the heuristic function and search.
 
-**Best First Search** : It is an unweighted algorithm.
+**Breadth First Search** : It starts at the start node, and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
 
-**Breadth First Search**
-
-**Depth First Search**
+**Depth First Search** : The DFS algorithm is a recursive algorithm that uses the idea of backtracking. It involves exhaustive searches of all the nodes by going ahead, if possible, else by backtracking.
 
 **Dijkstra**
 
