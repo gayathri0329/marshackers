@@ -20,7 +20,7 @@ This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding
 
 **Jump Point Search**
 
-**Trace** : Trace algorithm is similar to Astar algorithm. The only difference is instead of weight the heuristic is multiflied by a function which is less than 1.
+**Trace** : Trace algorithm is similar to Astar algorithm. The only difference is instead of weight the heuristic is multiplied by a function which is less than 1.
 
 ## Diagonal
 
