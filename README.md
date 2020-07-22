@@ -14,9 +14,9 @@ This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding
 
 **Depth First Search** : The DFS algorithm is a recursive algorithm that uses the idea of backtracking. It involves exhaustive searches of all the nodes by going ahead, if possible, else by backtracking.
 
-**Dijkstra** : It is an unweighted search algorithm.
+**Dijkstra** : It is an unweighted search algorithm.It picks the unvisited vertex with the lowest distance, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller.
 
-**IDAstar**
+**IDAstar** :
 
 **Jump Point Search**
 
@@ -39,6 +39,20 @@ By default the speed is set to "Fast".
 You can choose whether to cross corners of two blocked nodes (nodes with walls).
 
 This option only works if Allow Diagonal option is checked.
+
+## Bidirectional Searches
+
+Bidirectional Search, as the name implies, searches in two directions at the same time: one forward from the initial state and the other backward from the goal.The search stops when searches from both directions meet in the middle.
+
+This project consists of th following bidirctional searches:
+
+Astar
+
+Dijkstra
+
+Best first search
+
+Breadth First Search
 
 ## Mazes
 
