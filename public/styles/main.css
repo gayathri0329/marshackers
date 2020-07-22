@@ -39,19 +39,19 @@ ul {
 .none {
   transition: background-color 0.1s ease-in-out;
   background-color: white;
-  border-color: #79d9ce;
+  border-color: #9e1919;
 }
 
 .searching {
   transition: background-color 0.08s ease-in-out;
   background-color: #3ed8be;
-  border-color: #3ed8be;
+  border-color: #44b5d8;
 }
 
 .visited {
   transition: background-color 0.08s ease-in-out;
   background-color: #44b5d8;
-  border-color: #44b5d8;
+  border-color: #3ed8be;
 }
 
 .success {
