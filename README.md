@@ -1,6 +1,8 @@
-# Path Finding Visualiser Team-The Mars Hackers
+# Path Finding Visualizer Team-The Mars Hackers
 
 Our aim of the project is to build a Web-App to help a Mars Rover to find the shortest path .
+
+This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding.js/)
 
 ## Algorithms used to find the path:
 
