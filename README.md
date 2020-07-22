@@ -19,3 +19,9 @@ Our aim of the project is to build a Web-App to help a Mars Rover to find the sh
 **Jump Point Search**
 
 **Trace**
+
+## Diagonal
+
+The pathfinding visualizer supports both diagonal and non diagonal pathfinding.
+
+Simply check the "Allow Diagonal" .
