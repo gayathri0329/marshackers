@@ -16,9 +16,9 @@ This project is inspired by [Pathfinding.js](https://github.com/qiao/PathFinding
 
 **Dijkstra** : It is an unweighted search algorithm.It picks the unvisited vertex with the lowest distance, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller.
 
-**IDAstar** :
+**IDAstar** : IDA* is a memory constrained version of A*. It does everything that the A* does, it has the optimal characteristics of A* to find the shortest path but it uses less memory than Astar.
 
-**Jump Point Search**
+**Jump Point Search** : It is an optimization to the A* search algorithm for uniform-cost grids. It reduces symmetries in the search procedure by means of graph pruning, eliminating certain nodes in the grid based on assumptions that can be made about the current node's neighbors, as long as certain conditions relating to the grid are satisfied. As a result, the algorithm can consider long "jumps" along straight (horizontal and vertical) lines in the grid, rather than the small steps from one grid position to the next that ordinary A* considers.
 
 **Trace** : Trace algorithm is similar to Astar algorithm. The only difference is instead of weight the heuristic is multiplied by a function which is less than 1.
 
@@ -46,22 +46,24 @@ Bidirectional Search, as the name implies, searches in two directions at the sam
 
 This project consists of th following bidirectional searches:
 
-Astar
+- Astar
 
-Dijkstra
+- Dijkstra
 
-Best first search
+- Best first search
 
-Breadth First Search
+- Breadth First Search
 
 ## Mazes
 
-**Random**
+This project consists of the following mazes:
 
-**Recursive Division**
+- Random
 
-**Recursive Division(Vertical Skew)**
+- Recursive Division
 
-**Recursive Division(Horizontal Skew)**
+- Recursive Division(Vertical Skew)
 
-**Spiral**
+- Recursive Division(Horizontal Skew)
+
+- Spiral
