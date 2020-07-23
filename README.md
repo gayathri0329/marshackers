@@ -67,3 +67,17 @@ This project consists of the following mazes:
 - Recursive Division(Horizontal Skew)
 
 - Spiral
+
+## Download & Build on local
+
+```
+git clone https://github.com/gayathri0329/marshackers.git
+
+cd marshackers
+
+npm install
+
+npm start
+```
+
+Open your local browser and try accessing `http://localhost:3000/`
