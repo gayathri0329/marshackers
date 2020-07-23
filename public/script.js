@@ -1,5 +1,5 @@
-var totalRows = 50;
-var totalCols = 51;
+var totalRows = 40;
+var totalCols = 50;
 var inProgress = false;
 var cellsToAnimate = [];
 var createWalls = false;
